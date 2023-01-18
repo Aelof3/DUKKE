@@ -1,13 +1,11 @@
 import { useContext, useRef, useState } from "react"
 import { Box } from "@react-three/drei"
-//import { useBox } from "@react-three/cannon"
 import { ConfigContext } from "../context/Config"
 import { CuboidCollider, RigidBody } from "@react-three/rapier"
 
 export default function EndPoint(props) {
     const { isComplete } = useContext(ConfigContext)
 
-    //const [ref] = useBox(() => ({ mass: 0, ...props }))
     const ref = useRef()
 
     return (

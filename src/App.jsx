@@ -1,4 +1,4 @@
-import { Suspense, useRef, useState, useEffect } from 'react'
+import { Suspense, useRef, useState, useEffect, useContext } from 'react'
 import {
   HashRouter as Router,
   Routes,
@@ -8,11 +8,12 @@ import { OrbitControls, Environment, Html } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import MainMenu from './components/menus/MainMenu'
 import Level1 from './components/levels/Level1'
+import Level2 from './components/levels/Level2'
 
 import { Physics, Debug } from '@react-three/rapier'
 import Duck from './components/player/Duck'
 import PauseMenu from './components/menus/PauseMenu'
-import { ConfigProvider } from './components/context/Config'
+import { ConfigProvider, ConfigContext } from './components/context/Config'
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
 function Scene() {
   const [pause, setPause] = useState(false)
 
+  const { currentLevel } = useContext(ConfigContext)
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -57,7 +59,9 @@ function Scene() {
         <Suspense fallback={<LoadSpinner />}>
           <Physics colliders={false} paused={pause}>
               <Debug />
-              <Level1 />
+              {currentLevel === 1 && <Level1 />}
+              {currentLevel === 2 && <Level2 />}
+
               <Duck />
           </Physics>
         </Suspense>

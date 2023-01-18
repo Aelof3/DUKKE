@@ -27,7 +27,7 @@ export default function Duck(props) {
     const [keyBackRight, setKeyBackRight] = useState(false)
     const [keyThrottle, setKeyThrottle] = useState(false)
 
-    const { keys, setIsComplete } = useContext(ConfigContext)
+    const { keys, setIsComplete, isComplete, currentLevel } = useContext(ConfigContext)
 
     const isDebug = false
 
@@ -38,11 +38,6 @@ export default function Duck(props) {
     //const raycast = useForwardRaycast(ref)
 
     const handleReset = () => {
-        /* ref.current.position.set(...startingPosition)
-        api.position.set(...startingPosition)
-        api.velocity.set(0, 0, 0)
-        api.angularVelocity.set(0, 0, 0)
-        api.rotation.set(0, 0, 0) */
         rigidBodyRef.current.resetForces(true)
         rigidBodyRef.current.resetTorques(true)
         rigidBodyRef.current.setTranslation(new Vector3(...startingPosition), true)
@@ -110,22 +105,13 @@ export default function Duck(props) {
 
     const getLocalPosition = (x, y, z, p=new Vector3(), q=new Quaternion()) => {
         p.set(x, y, z)
-        //localPosition.applyQuaternion(ref.current.quaternion)
         ref.current.localToWorld(p)
-        //ref.current.localToWorld(p)
-        //ref.current.getWorldQuaternion(q)
-        //localPosition.applyQuaternion(q)
         return p
     }
 
     const getLocalForce = (x, y, z, f=new Vector3(), q=new Quaternion(), d=new Vector3()) => {
         f.set(x, y, z)
         f.applyQuaternion(rigidBodyRef.current.rotation())
-        //ref.current.worldToLocal(localForce)
-        //ref.current.localToWorld(localForce)
-        //ref.current.getWorldQuaternion(q)
-        //ref.current.getWorldDirection(d)
-        //f.applyQuaternion(q)
         return f
     }
 
@@ -134,50 +120,49 @@ export default function Duck(props) {
         let force = [0,0,0]
         const forcePerEngine = 0.5
         
-        if (isDebug) {
-            if (keyFrontRight) {
-                //ref.current.position.set(ref.current.position.x + 0.1, ref.current.position.y, ref.current.position.z)
-                //api.position.set(ref.current.position.x + 0.1, ref.current.position.y, ref.current.position.z)
-            }
+        if (keyFrontLeft) {
+            pos[0] += 0.25
+            pos[2] += -0.15
+            force[1] += forcePerEngine
+        }
+        if (keyFrontRight) {
+            pos[0] += 0.25
+            pos[2] += 0.15
+            force[1] += forcePerEngine
+        }
+        if (keyBackLeft) {
+            pos[0] += -0.25
+            pos[2] += -0.15
+            force[1] += forcePerEngine
+        }
+        if (keyBackRight) {
+            pos[0] += -0.25
+            pos[2] += 0.15
+            force[1] += forcePerEngine
+        }
+        if (keyThrottle) {
+            const localForce = getLocalForce(0, forcePerEngine * 4, 0)
             
-        } else {
-            if (keyFrontLeft) {
-                pos[0] += 0.25
-                pos[2] += -0.15
-                force[1] += forcePerEngine
-            }
-            if (keyFrontRight) {
-                pos[0] += 0.25
-                pos[2] += 0.15
-                force[1] += forcePerEngine
-            }
-            if (keyBackLeft) {
-                pos[0] += -0.25
-                pos[2] += -0.15
-                force[1] += forcePerEngine
-            }
-            if (keyBackRight) {
-                pos[0] += -0.25
-                pos[2] += 0.15
-                force[1] += forcePerEngine
-            }
-            if (keyThrottle) {
-                const localForce = getLocalForce(0, forcePerEngine * 4, 0)
-                
-                rigidBodyRef.current.applyImpulse(localForce)
-            }
-            if (keyFrontLeft || keyFrontRight || keyBackLeft || keyBackRight) {
-                const pX = Math.max(Math.min(pos[0], 0.25), -0.25)
-                const pY = 0
-                const pZ = Math.max(Math.min(pos[2], 0.15), -0.15)
-                
-                const localPosition = getLocalPosition(pX, pY, pZ)
-                const localForce = getLocalForce(force[0], force[1], force[2])
-                
-                rigidBodyRef.current.applyImpulseAtPoint(localForce, localPosition)
-            }
+            rigidBodyRef.current.applyImpulse(localForce)
+        }
+        if (keyFrontLeft || keyFrontRight || keyBackLeft || keyBackRight) {
+            const pX = Math.max(Math.min(pos[0], 0.25), -0.25)
+            const pY = 0
+            const pZ = Math.max(Math.min(pos[2], 0.15), -0.15)
+            
+            const localPosition = getLocalPosition(pX, pY, pZ)
+            const localForce = getLocalForce(force[0], force[1], force[2])
+            
+            rigidBodyRef.current.applyImpulseAtPoint(localForce, localPosition)
         }
     })
+
+    useEffect(() => {
+        if (isComplete) {
+            handleReset()
+        }
+    }, [isComplete, currentLevel])
+
 
     return (
         <RigidBody 
@@ -189,21 +174,12 @@ export default function Duck(props) {
                 angularDamping={0}
                 mass={1}
                 onCollisionEnter={({ manifold, target, other }) => {
-                    console.log(
-                      "Collision at world position ",
-                      manifold.solverContactPoint(0)
-                    );
-            
                     if (other.rigidBodyObject) {
-                      console.log(
-                        // this rigid body's Object3D
-                        target.rigidBodyObject.name,
-                        " collided with ",
-                        // the other rigid body's Object3D
-                        other.rigidBodyObject.name
-                      );
+                        if (target.rigidBodyObject.name === 'duck' && other.rigidBodyObject.name === 'end') {
+                            setIsComplete(true)
+                        }
                     }
-                  }}
+                }}
             >
             <group ref={ref} position={startingPosition}>
                 <Box castShadow args={[0.5, 0.05, 0.3]} position={[0, -0.2, 0]} name="duck_base">
