@@ -1,12 +1,16 @@
 import { Box } from "@react-three/drei"
-import { useBox } from "@react-three/cannon"
+import { CuboidCollider, RigidBody } from "@react-three/rapier"
+import { useRef } from "react"
 
 export default function StartPoint(props) {
-    const [ref] = useBox(() => ({ mass: 0, ...props }))
+    const ref = useRef()
 
     return (
-        <Box castShadow receiveShadow ref={ref} args={[1, 1, 1]} {...props} name="start">
-            <meshStandardMaterial color={"#990000"} />
-        </Box>
+        <RigidBody name="start" type="fixed">
+            <CuboidCollider  args={[0.5, 0.5, 0.5]} {...props}/>
+            <Box castShadow receiveShadow ref={ref} args={[1, 1, 1]} {...props}>
+                <meshStandardMaterial color={"#990000"} />
+            </Box>
+        </RigidBody>
     )
 }

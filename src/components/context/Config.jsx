@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export const ConfigContext = React.createContext(null)
 
@@ -20,6 +20,13 @@ export const ConfigProvider = ({ children }) => {
 
     const handleLevelComplete = () => {
         setIsComplete(true)
+        
+        
+    }
+
+    useEffect(() => {
+        if (!isComplete) return
+        
         setTimeout(() => {
             setIsComplete(false)
             
@@ -29,8 +36,11 @@ export const ConfigProvider = ({ children }) => {
                 alert('You win!')
             }
         }, 500)
-        
-    }
+
+        return () => {
+            setIsComplete(false)
+        }
+    }, [isComplete])
 
     return (
         <ConfigContext.Provider 
@@ -44,7 +54,9 @@ export const ConfigProvider = ({ children }) => {
                 setPaused,
 
                 currentLevel,
-                isComplete
+                
+                isComplete,
+                setIsComplete
             }}>
             {children}
         </ConfigContext.Provider>

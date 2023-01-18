@@ -6,7 +6,7 @@ export const useForwardRaycast = (obj) => {
 
     const raycaster = useMemo(() => new Raycaster(), [])
     const pos = useMemo(() => new Vector3(), [])
-    const dir = useMemo(() => new Vector3(0,-1,0), [])
+    const dir = useMemo(() => new Vector3(), [])
     const scene = useThree(state => state.scene)
     
     return () => {
@@ -14,7 +14,7 @@ export const useForwardRaycast = (obj) => {
             return []
         raycaster.set(
             obj.current.getWorldPosition(pos),
-            dir)
+            obj.current.getWorldDirection(dir))
         return raycaster.intersectObjects(scene.children)
     }
 }

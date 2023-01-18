@@ -9,7 +9,7 @@ import { Canvas } from '@react-three/fiber'
 import MainMenu from './components/menus/MainMenu'
 import Level1 from './components/levels/Level1'
 
-import { Physics } from '@react-three/cannon'
+import { Physics, Debug } from '@react-three/rapier'
 import Duck from './components/player/Duck'
 import PauseMenu from './components/menus/PauseMenu'
 import { ConfigProvider } from './components/context/Config'
@@ -17,12 +17,14 @@ import { ConfigProvider } from './components/context/Config'
 export default function App() {
   return (
     <ConfigProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<MainMenu />} />
-          <Route path="/game" element={<Scene />} />
-        </Routes>
-      </Router>
+      <main className='fixed inset-0 w-screen h-screen'>
+        <Router>
+          <Routes>
+            <Route path="/" element={<MainMenu />} />
+            <Route path="/game" element={<Scene />} />
+          </Routes>
+        </Router>
+      </main>
     </ConfigProvider>
   )
 }
@@ -47,28 +49,29 @@ function Scene() {
   }, [pause])
 
   return (
-    <main className='fixed inset-0 w-screen h-screen'>
+    <>
       <Canvas shadows camera={{ position: [-8, 12, -25], fov: 25 }}>
         <color attach="background" args={['black']} />
         <directionalLight castShadow position={[5, 5, 5]} />
         <OrbitControls />
-        <Physics>
-          <Suspense fallback={<LoadSpinner />}>
-            <Level1 />
-            <Duck />
-          </Suspense>
-        </Physics>
+        <Suspense fallback={<LoadSpinner />}>
+          <Physics colliders={false} paused={pause}>
+              <Debug />
+              <Level1 />
+              <Duck />
+          </Physics>
+        </Suspense>
         <Environment preset="city" />
       </Canvas>
       {pause && <PauseMenu />}
-    </main>
+    </>
   )
 }
 
 function LoadSpinner() {
   return (
     <Html center>
-      <div className="fixed z-50 h-screen w-screen inset-0 flex justify-center items-center bg-gray-800">
+      <div className="z-50 flex justify-center items-center bg-gray-800">
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
       </div>
     </Html>
