@@ -7,13 +7,15 @@ import {
 import { OrbitControls, Environment, Html } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import MainMenu from './components/menus/MainMenu'
-import Level1 from './components/levels/Level1'
-import Level2 from './components/levels/Level2'
 
 import { Physics, Debug } from '@react-three/rapier'
 import Duck from './components/player/Duck'
 import PauseMenu from './components/menus/PauseMenu'
 import { ConfigProvider, ConfigContext } from './components/context/Config'
+
+import Level1 from './components/levels/Level1'
+import Level2 from './components/levels/Level2'
+import Level3 from './components/levels/Level3'
 
 export default function App() {
   return (
@@ -61,6 +63,7 @@ function Scene() {
               <Debug />
               {currentLevel === 1 && <Level1 />}
               {currentLevel === 2 && <Level2 />}
+              {currentLevel === 3 && <Level3 />}
 
               <Duck />
           </Physics>

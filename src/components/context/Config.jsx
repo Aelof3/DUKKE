@@ -12,7 +12,7 @@ export const ConfigProvider = ({ children }) => {
         reset: 'r'
     })
 
-    const totalLevels = 1
+    const totalLevels = 3
     const [currentLevel, setCurrentLevel] = useState(1)
     const [paused, setPaused] = useState(false)
 
@@ -26,11 +26,11 @@ export const ConfigProvider = ({ children }) => {
 
     useEffect(() => {
         if (!isComplete) return
-        
+
         setTimeout(() => {
             setIsComplete(false)
             
-            if (currentLevel <= totalLevels) {
+            if (currentLevel < totalLevels) {
                 setCurrentLevel(currentLevel + 1)
             } else {
                 alert('You win!')
