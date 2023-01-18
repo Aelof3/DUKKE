@@ -60,7 +60,7 @@ function Scene() {
         <OrbitControls />
         <Suspense fallback={<LoadSpinner />}>
           <Physics colliders={false} paused={pause}>
-              <Debug />
+              {/* <Debug /> */}
               {currentLevel === 1 && <Level1 />}
               {currentLevel === 2 && <Level2 />}
               {currentLevel === 3 && <Level3 />}
@@ -78,7 +78,7 @@ function Scene() {
 function LoadSpinner() {
   return (
     <Html center>
-      <div className="z-50 flex justify-center items-center bg-gray-800">
+      <div className="z-50 flex justify-center items-center">
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
       </div>
     </Html>

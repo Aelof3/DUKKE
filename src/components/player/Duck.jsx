@@ -1,14 +1,11 @@
 import { useContext, useEffect, useState, useRef } from "react"
-//import { useBox } from "@react-three/cannon"
 import { Box, useGLTF, useHelper } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 
-//import duckGLTF from '../../assets/models/old/Duck.gltf'
 import Engine from "./Engine"
-import { useForwardRaycast } from "../../util/hooks"
 import { ConfigContext } from "../context/Config"
 import { addUrlBase } from "../../util/helpers"
-import { BoxHelper, GridHelper, Quaternion, Vector3, Vector4 } from "three"
+import { Quaternion, Vector3, Vector4 } from "three"
 import { RigidBody } from "@react-three/rapier"
 
 const DuckModel = (props) => {
@@ -31,11 +28,8 @@ export default function Duck(props) {
 
     const isDebug = false
 
-    //const [ref, api] = useBox(() => ({ mass: isDebug ? 0 : 1,linearDamping:0.95, args: [0.5, 0.7, 0.2], position: startingPosition, ...props }))
     const ref = useRef()
     const rigidBodyRef = useRef()
-
-    //const raycast = useForwardRaycast(ref)
 
     const handleReset = () => {
         rigidBodyRef.current.resetForces(true)
