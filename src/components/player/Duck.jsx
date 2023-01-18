@@ -16,7 +16,7 @@ const DuckModel = (props) => {
 }
 
 export default function Duck(props) {
-    const startingPosition = [0, 2, 0]
+    const startingPosition = [0, 1.5, 0]
 
     const [keyFrontLeft, setKeyFrontLeft] = useState(false)
     const [keyFrontRight, setKeyFrontRight] = useState(false)

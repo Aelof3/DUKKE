@@ -12,7 +12,7 @@ export const ConfigProvider = ({ children }) => {
         reset: 'r'
     })
 
-    const totalLevels = 3
+    const totalLevels = 6
     const [currentLevel, setCurrentLevel] = useState(1)
     const [paused, setPaused] = useState(false)
 

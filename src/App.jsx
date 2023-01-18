@@ -16,6 +16,9 @@ import { ConfigProvider, ConfigContext } from './components/context/Config'
 import Level1 from './components/levels/Level1'
 import Level2 from './components/levels/Level2'
 import Level3 from './components/levels/Level3'
+import Level4 from './components/levels/Level4'
+import Level5 from './components/levels/Level5'
+import Level6 from './components/levels/Level6'
 
 export default function App() {
   return (
@@ -64,6 +67,9 @@ function Scene() {
               {currentLevel === 1 && <Level1 />}
               {currentLevel === 2 && <Level2 />}
               {currentLevel === 3 && <Level3 />}
+              {currentLevel === 4 && <Level4 />}
+              {currentLevel === 5 && <Level5 />}
+              {currentLevel === 6 && <Level6 />}
 
               <Duck />
           </Physics>
