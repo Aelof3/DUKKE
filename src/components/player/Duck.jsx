@@ -7,10 +7,12 @@ import { useFrame } from "@react-three/fiber"
 import Engine from "./Engine"
 import { useForwardRaycast } from "../../util/hooks"
 import { ConfigContext } from "../context/Config"
+import { addUrlBase } from "../../util/helpers"
 
 const DuckModel = (props) => {
     const duckScale = 0.4
-    const gltf = useGLTF('/models/Duck.gltf')
+    const duckUrl = addUrlBase('models/Duck.gltf')
+    const gltf = useGLTF(duckUrl)
     return <primitive {...props} object={gltf.scene} dispose={null} scale={[duckScale,duckScale,duckScale]} />
 }
 
