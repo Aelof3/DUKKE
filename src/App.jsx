@@ -12,15 +12,18 @@ import Level1 from './components/levels/Level1'
 import { Physics } from '@react-three/cannon'
 import Duck from './components/player/Duck'
 import PauseMenu from './components/menus/PauseMenu'
+import { ConfigProvider } from './components/context/Config'
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<MainMenu />} />
-        <Route path="/game" element={<Scene />} />
-      </Routes>
-    </Router>
+    <ConfigProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainMenu />} />
+          <Route path="/game" element={<Scene />} />
+        </Routes>
+      </Router>
+    </ConfigProvider>
   )
 }
 

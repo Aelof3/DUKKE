@@ -1,13 +1,41 @@
 # TODO:
 
-### menu
+menu
+    - controls
+    - sound
+    - load game
 
-### gui
+gui
+    - show controls
+    - show resets
+    - show quacks
+    - show time
+    - show level
+
+misc
+    - add friction to start point
+
+    - make pause menu actually pause the game
+
+    - make a level editor
+
+    - add saved games
+
+    - add controls options to menu
+
+    - add sound
+
 
 ### levels
     - level base
         - starting point
         - parts
+            - block
+                - static
+                - spinning
+                - moving
+                - moving and spinning
+            - ?
         - ending point
 
     - park
@@ -47,3 +75,5 @@
     - kitchen
 
     - bathroom
+
+
