@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import { useBox } from "@react-three/cannon"
-import { Box, useFBX, useGLTF } from "@react-three/drei"
+import { Box, useGLTF } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 
-import duckFBX from '../../assets/models/FBX/RubberDuck_LOD0.fbx'
 import duckGLTF from '../../assets/models/old/Duck.gltf'
+import Engine from "./Engine"
+import { useForwardRaycast } from "../../util/hooks"
 
 const DuckModel = (props) => {
     const duckScale = 0.4
@@ -19,8 +20,9 @@ export default function Duck(props) {
     const [keyS, setKeyS] = useState(false)
     const [keySpace, setKeySpace] = useState(false)
 
-    const [ref, api] = useBox(() => ({ mass: 1,linearDamping:0.75, angularDamping:0.75, args: [0.5, 0.7, 0.2], position: [0, 2, 0], ...props }))
+    const [ref, api] = useBox(() => ({ mass: 1,linearDamping:0.95, args: [0.5, 0.7, 0.2], position: [0, 2, 0], ...props }))
 
+    const raycast = useForwardRaycast(ref)
 
     const handleReset = () => {
         api.position.set(0, 2, 0)
@@ -87,58 +89,54 @@ export default function Duck(props) {
             pos[0] += 0.25
             pos[2] += 0.15
             force[1] += forcePerEngine
-            //api.applyLocalForce([0, 0.25, 0], [0.25, 0.1, 0.15])
         }
         if (keyW) {
             pos[0] += -0.25
             pos[2] += 0.15
             force[1] += forcePerEngine
-            //api.applyLocalForce([0, 0.25, 0], [-0.25, 0.1, 0.15])
         }
         if (keyA) {
             pos[0] += 0.25
             pos[2] += -0.15
             force[1] += forcePerEngine
-            //api.applyLocalForce([0, 0.25, 0], [0.25, 0.1, -0.15])
         }
         if (keyS) {
             pos[0] += -0.25
             pos[2] += -0.15
             force[1] += forcePerEngine
-            //api.applyLocalForce([0, 0.25, 0], [-0.25, 0.1, -0.15])
         }
         if (keySpace) {
-            api.applyLocalForce([0, 12, 0], [0, 0.1, 0])
+            api.applyLocalForce([0, 20, 0], [0, 0.1, 0])
         }
         if (keyQ || keyW || keyA || keyS) {
             const pX = Math.max(Math.min(pos[0], 0.25), -0.25)
             const pY = 0.1
             const pZ = Math.max(Math.min(pos[2], 0.15), -0.15)
-
+            
             api.applyLocalForce(force, [pX, pY, pZ])
+        }
+        
+        const intersections = raycast()
+
+        // if intersections includes "end"
+        if (intersections.some((i) => i.object.name === "end")) {
+            handleReset()
         }
     })
 
     return (
         <group ref={ref}>
-            <Box castShadow args={[0.5, 0.05, 0.3]} position={[0, -0.2, 0]}>
+            <Box castShadow args={[0.5, 0.05, 0.3]} position={[0, -0.2, 0]} name="duck_base">
                 <meshStandardMaterial color={"#999900"} />
             </Box>
 
-            <Box castShadow receiveShadow args={[0.1, 0.2, 0.1]} position={[0.25, -0.2, 0.15]}>
-                <meshStandardMaterial color={keyQ || keySpace ? "orange" : "purple"} />
-            </Box>
-            <Box castShadow receiveShadow args={[0.1, 0.2, 0.1]} position={[-0.25, -0.2, 0.15]}>
-                <meshStandardMaterial color={keyW || keySpace ? "orange" : "purple"} />
-            </Box>
-            <Box castShadow receiveShadow args={[0.1, 0.2, 0.1]} position={[0.25, -0.2, -0.15]}>
-                <meshStandardMaterial color={keyA || keySpace ? "orange" : "purple"} />
-            </Box>
-            <Box castShadow receiveShadow args={[0.1, 0.2, 0.1]} position={[-0.25, -0.2, -0.15]}>
-                <meshStandardMaterial color={keyS || keySpace ? "orange" : "purple"} />
-            </Box>
+            <Engine position={[0.25, -0.2, 0.15]} toggle={keyQ || keySpace} name="engine_q" />
+            <Engine position={[-0.25, -0.2, 0.15]} toggle={keyW || keySpace} name="engine_w" />
+            <Engine position={[0.25, -0.2, -0.15]} toggle={keyA || keySpace} name="engine_a" />
+            <Engine position={[-0.25, -0.2, -0.15]} toggle={keyS || keySpace} name="engine_s" />
+            
 
-            <DuckModel position={[-0.05, -0.4, 0]} /> 
+            <DuckModel position={[-0.05, -0.4, 0]} name="duck_model" /> 
         </group>
     )
 }

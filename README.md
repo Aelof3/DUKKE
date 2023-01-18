@@ -1,17 +1,3 @@
-## Copy template
-
-```console
-npx tiged mattrossman/r3f-vite
-```
-
-## Setup and run
-
-```console
-yarn
-yarn dev
-```
-
-
 # TODO:
 
 ### menu
@@ -23,3 +9,41 @@ yarn dev
         - starting point
         - parts
         - ending point
+
+    - park
+
+    - city
+    
+    - desert
+
+    - ice
+
+    - volcano
+
+    - island
+
+    - space
+
+    - castle
+        
+    - cave
+
+    - forest
+
+    - mountain
+
+    - ocean
+
+    - swamp
+
+    - heaven
+
+    - hell
+
+    - underwater
+
+    - bed room
+
+    - kitchen
+
+    - bathroom
