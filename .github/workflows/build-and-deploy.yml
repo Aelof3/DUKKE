@@ -1,51 +1,40 @@
-name: Deploy
+# .github/workflows/build-and-deploy.yml
+
+name: Node.js CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+
+permissions:
+  contents: write
 
 jobs:
   build:
-    name: Build
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Setup Node
-        uses: actions/setup-node@v1
+      # https://github.com/actions/checkout
+      - uses: actions/checkout@v3
+        
+      # a standard step for GitHub actions on Node
+      # https://github.com/actions/setup-node
+      - uses: actions/setup-node@v3
         with:
+          # update the Node version to meet your needs
           node-version: 16
+          cache: npm
 
-      - name: Install dependencies
-        uses: bahmutov/npm-install@v1
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+          touch dist/.nojekyll
 
-      - name: Build project
-        run: npm run build
-
-      - name: Upload production-ready build files
-        uses: actions/upload-artifact@v2
+      - name: Deploy
+        # https://github.com/JamesIves/github-pages-deploy-action
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          name: production-files
-          path: ./dist
-
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: production-files
-          path: ./dist
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          branch: gh-pages
+          folder: dist
