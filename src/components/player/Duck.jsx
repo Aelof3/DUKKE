@@ -186,7 +186,7 @@ export default function Duck(props) {
                     <meshStandardMaterial color={"#999900"} />
                 </Box>
 
-                <axesHelper args={[5]} />
+                {/* <axesHelper args={[5]} /> */}
 
                 <Engine position={[0.25, -0.3, -0.15]} toggle={keyFrontLeft || keyThrottle} name="engine_front_left" />
                 <Engine position={[0.25, -0.3, 0.15]} toggle={keyFrontRight || keyThrottle} name="engine_front_right" />
