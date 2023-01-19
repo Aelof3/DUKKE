@@ -12,17 +12,50 @@ export const ConfigProvider = ({ children }) => {
         reset: 'r'
     })
 
-    const totalLevels = 6
-    const [currentLevel, setCurrentLevel] = useState(1)
+    const [quacks, setQuacks] = useState(0)
+
+    const sD = localStorage.getItem('startDate')
+    const [startDate, setStartDate] = useState(sD ? new Date(sD) : new Date())
+
+    const rL = localStorage.getItem('resets')
+    const [resets, setResets] = useState(rL ? parseInt(rL) : 0)
+
+    const totalLevels = 9
+
+    const cL = localStorage.getItem('currentLevel')
+    const [currentLevel, setCurrentLevel] = useState(cL ? parseInt(cL) : 1)
+    //const [currentLevel, setCurrentLevel] = useState(1)
+    //localStorage.setItem('currentLevel', 1)
+
     const [paused, setPaused] = useState(false)
 
     const [isComplete, setIsComplete] = useState(false)
 
+    const resetProgress = () => {
+        setStartDate(new Date())
+        setResets(0)
+        setCurrentLevel(1)
+    }
+
     const handleLevelComplete = () => {
         setIsComplete(true)
-        
-        
     }
+
+    const handleResets = () => {
+        setResets(nR => nR + 1)
+    }
+
+    useEffect(() => {
+        localStorage.setItem('currentLevel', currentLevel)
+    }, [currentLevel])
+
+    useEffect(() => {
+        localStorage.setItem('startDate', startDate)
+    }, [startDate])
+
+    useEffect(() => {
+        localStorage.setItem('resets', resets)
+    }, [resets])
 
     useEffect(() => {
         if (!isComplete) return
@@ -31,9 +64,19 @@ export const ConfigProvider = ({ children }) => {
             setIsComplete(false)
             
             if (currentLevel < totalLevels) {
-                setCurrentLevel(currentLevel + 1)
+                setCurrentLevel(nCL => nCL + 1)
             } else {
-                alert('You win!')
+                
+                const wText = [
+                    'cGFpbnR7M',
+                    '80b',
+                    '9E',
+                    'UtLMyF9'
+                ]
+                
+                alert(`You win! \n\n ${atob(wText.join('V'))}`)
+
+                setCurrentLevel(1)
             }
         }, 500)
 
@@ -54,9 +97,17 @@ export const ConfigProvider = ({ children }) => {
                 setPaused,
 
                 currentLevel,
-                
+                resetProgress,
+
+                totalLevels,
+                quacks,
+
                 isComplete,
-                setIsComplete
+                setIsComplete,
+                resets,
+                handleResets,
+
+                startDate,
             }}>
             {children}
         </ConfigContext.Provider>

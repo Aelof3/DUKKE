@@ -19,6 +19,12 @@ import Level3 from './components/levels/Level3'
 import Level4 from './components/levels/Level4'
 import Level5 from './components/levels/Level5'
 import Level6 from './components/levels/Level6'
+import Level7 from './components/levels/Level7'
+import Level8 from './components/levels/Level8'
+import Level9 from './components/levels/Level9'
+
+
+import Gui from './components/Gui'
 
 export default function App() {
   return (
@@ -62,7 +68,7 @@ function Scene() {
         <directionalLight castShadow position={[5, 5, 5]} />
         <OrbitControls />
         <Suspense fallback={<LoadSpinner />}>
-          <Physics colliders={false} paused={pause}>
+          <Physics colliders={false} paused={pause} interpolate>
               {/* <Debug /> */}
               {currentLevel === 1 && <Level1 />}
               {currentLevel === 2 && <Level2 />}
@@ -70,12 +76,17 @@ function Scene() {
               {currentLevel === 4 && <Level4 />}
               {currentLevel === 5 && <Level5 />}
               {currentLevel === 6 && <Level6 />}
+              {currentLevel === 7 && <Level7 />}
+              {currentLevel === 8 && <Level8 />}
+              {currentLevel === 9 && <Level9 />}
+
 
               <Duck />
           </Physics>
         </Suspense>
         <Environment preset="city" />
       </Canvas>
+      <Gui />
       {pause && <PauseMenu />}
     </>
   )

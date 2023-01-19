@@ -1,6 +1,7 @@
-import { useThree } from '@react-three/fiber'
-import { useMemo } from 'react'
-import { Raycaster, Vector3 } from 'three'
+import { randomHexColor } from './helpers'
+import { useThree, useFrame } from '@react-three/fiber'
+import { useMemo, useState } from 'react'
+import { Raycaster, Vector3, Color } from 'three'
 
 export const useForwardRaycast = (obj) => {
 
@@ -17,4 +18,21 @@ export const useForwardRaycast = (obj) => {
             obj.current.getWorldDirection(dir))
         return raycaster.intersectObjects(scene.children)
     }
+}
+
+export const useRandomColorFlash = (ref) => {
+    const [color, setColor] = useState(new Color(randomHexColor()))
+
+    const generateRandomColor = (c=new Color()) => {
+        c.set(randomHexColor())
+        return c
+    }
+
+    useFrame((state, delta, xrFrame) => {
+        if (state.clock.getElapsedTime() % 1 < delta) {
+            setColor(generateRandomColor())
+        }
+
+        ref.current.material.color.lerp(color, 0.05)
+    })
 }

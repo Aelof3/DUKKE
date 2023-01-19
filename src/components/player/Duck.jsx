@@ -16,7 +16,7 @@ const DuckModel = (props) => {
 }
 
 export default function Duck(props) {
-    const startingPosition = [0, 1.5, 0]
+    const startingPosition = [0, 1.4, 0]
 
     const [keyFrontLeft, setKeyFrontLeft] = useState(false)
     const [keyFrontRight, setKeyFrontRight] = useState(false)
@@ -24,17 +24,21 @@ export default function Duck(props) {
     const [keyBackRight, setKeyBackRight] = useState(false)
     const [keyThrottle, setKeyThrottle] = useState(false)
 
-    const { keys, setIsComplete, isComplete, currentLevel } = useContext(ConfigContext)
+    const { keys, setIsComplete, isComplete, currentLevel, handleResets } = useContext(ConfigContext)
 
     const isDebug = false
 
     const ref = useRef()
     const rigidBodyRef = useRef()
 
+    const [rot, setRot] = useState([0, 0, 0])
+    const [posit, setPosit] = useState(startingPosition)
+
     const handleReset = () => {
         rigidBodyRef.current.resetForces(true)
         rigidBodyRef.current.resetTorques(true)
-        rigidBodyRef.current.setTranslation(new Vector3(...startingPosition), true)
+
+        rigidBodyRef.current.setTranslation(new Vector3(0,0,0), true)
         rigidBodyRef.current.setLinvel(new Vector3(0, 0, 0), true)
         rigidBodyRef.current.setAngvel(new Vector3(0, 0, 0), true)
         rigidBodyRef.current.setRotation({ w: 1.0, x: 0.0, y: 0.0, z: 0.0 }, true)
@@ -45,6 +49,8 @@ export default function Duck(props) {
         setKeyFrontLeft(false)
         setKeyFrontRight(false)
         setKeyThrottle(false)
+
+        handleResets()
     }
 
     useEffect(() => {
