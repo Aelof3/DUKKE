@@ -29,7 +29,7 @@ import Gui from './components/Gui'
 export default function App() {
   return (
     <ConfigProvider>
-      <main className='fixed inset-0 w-screen h-screen'>
+      <main className='fixed inset-0 w-screen h-screen bg-gray-900'>
         <Router>
           <Routes>
             <Route path="/" element={<MainMenu />} />
