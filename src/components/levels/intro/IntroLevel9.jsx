@@ -1,9 +1,9 @@
-import Floor from "../parts/Floor"
-import Block from "../parts/Block"
-import LevelBase from "../parts/LevelBase"
-import Spinner from "../parts/Spinner"
+import Floor from "../../parts/Floor"
+import Block from "../../parts/Block"
+import LevelBase from "../../parts/LevelBase"
+import Spinner from "../../parts/Spinner"
 
-export default function Level9(props) {
+export default function IntroLevel9(props) {
     return (
         <LevelBase start_pos={[0, 0.5, 0]} end_pos={[9, 0.5, 0]} name="level_4">
             <Spinner axes={[true,false,false]}>

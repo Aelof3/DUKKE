@@ -38,13 +38,19 @@ export default function Gui(props) {
                     <li className="px-4 py-2 border-white border flex items-center justify-center">s</li>
                     <li className="px-4 py-2 border-white border flex items-center justify-center col-span-2">space</li>
                 </ul>
+                <ul className="grid grid-cols-2 gap-2">
+                    <li className="px-4 py-2 border-white border flex items-center justify-center">reset: r</li>
+                    <li className="px-4 py-2 border-white border flex items-center justify-center">menu: esc</li>
+                </ul>
+                    
             </div>
             <div className="absolute top-6 right-8">
                 <ul className="flex flex-col gap-4">
+                    <li>Section: Introduction</li>
                     <li>Current Level: {currentLevel}/{totalLevels}</li>
                     <li>Resets: {resets} </li>
                     <li>Time Since Start: {fN(h)}:{fN(m)}:{fN(s)}</li>
-                    <li>Quacks: {quacks}</li>
+                    {/* <li>Quacks: {quacks}</li> */}
                 </ul>    
             </div>
         </div>

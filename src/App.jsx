@@ -13,15 +13,15 @@ import Duck from './components/player/Duck'
 import PauseMenu from './components/menus/PauseMenu'
 import { ConfigProvider, ConfigContext } from './components/context/Config'
 
-import Level1 from './components/levels/Level1'
-import Level2 from './components/levels/Level2'
-import Level3 from './components/levels/Level3'
-import Level4 from './components/levels/Level4'
-import Level5 from './components/levels/Level5'
-import Level6 from './components/levels/Level6'
-import Level7 from './components/levels/Level7'
-import Level8 from './components/levels/Level8'
-import Level9 from './components/levels/Level9'
+import IntroLevel1 from './components/levels/intro/IntroLevel1'
+import IntroLevel2 from './components/levels/intro/IntroLevel2'
+import IntroLevel3 from './components/levels/intro/IntroLevel3'
+import IntroLevel4 from './components/levels/intro/IntroLevel4'
+import IntroLevel5 from './components/levels/intro/IntroLevel5'
+import IntroLevel6 from './components/levels/intro/IntroLevel6'
+import IntroLevel7 from './components/levels/intro/IntroLevel7'
+import IntroLevel8 from './components/levels/intro/IntroLevel8'
+import IntroLevel9 from './components/levels/intro/IntroLevel9'
 
 
 import Gui from './components/Gui'
@@ -70,15 +70,15 @@ function Scene() {
         <Suspense fallback={<LoadSpinner />}>
           <Physics colliders={false} paused={pause} interpolate>
               {/* <Debug /> */}
-              {currentLevel === 1 && <Level1 />}
-              {currentLevel === 2 && <Level2 />}
-              {currentLevel === 3 && <Level3 />}
-              {currentLevel === 4 && <Level4 />}
-              {currentLevel === 5 && <Level5 />}
-              {currentLevel === 6 && <Level6 />}
-              {currentLevel === 7 && <Level7 />}
-              {currentLevel === 8 && <Level8 />}
-              {currentLevel === 9 && <Level9 />}
+              {currentLevel === 1 && <IntroLevel1 />}
+              {currentLevel === 2 && <IntroLevel2 />}
+              {currentLevel === 3 && <IntroLevel3 />}
+              {currentLevel === 4 && <IntroLevel4 />}
+              {currentLevel === 5 && <IntroLevel5 />}
+              {currentLevel === 6 && <IntroLevel6 />}
+              {currentLevel === 7 && <IntroLevel7 />}
+              {currentLevel === 8 && <IntroLevel8 />}
+              {currentLevel === 9 && <IntroLevel9 />}
 
 
               <Duck />

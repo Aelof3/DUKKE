@@ -3,20 +3,14 @@
 ### menu
 - controls
 - sound
-- load game
 
 ### gui
 - show controls
-- show resets
-- show quacks
-- show time
-- show level
+    - add reset and esc for menu
+    - add mobile controls
 
 ### misc
-- add friction to start point
-- make pause menu actually pause the game
 - make a level editor
-- add saved games
 - add controls options to menu
 - add sound
 
@@ -32,6 +26,7 @@
             - moving and spinning
         - ?
     - ending point
+    
 - park
 - city
 - desert

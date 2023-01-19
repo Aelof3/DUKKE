@@ -1,9 +1,9 @@
-import Floor from "../parts/Floor"
-import Block from "../parts/Block"
-import LevelBase from "../parts/LevelBase"
+import Floor from "../../parts/Floor"
+import Block from "../../parts/Block"
+import LevelBase from "../../parts/LevelBase"
 import { RigidBody } from "@react-three/rapier"
 
-export default function Level8(props) {
+export default function IntroLevel8(props) {
     return (
         <LevelBase start_pos={[0, 0.5, 0]} end_pos={[9, 0.5, 0]} name="level_8">
             <RigidBody type={"fixed"} colliders="cuboid">

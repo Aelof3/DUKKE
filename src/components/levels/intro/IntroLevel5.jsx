@@ -1,8 +1,8 @@
-import Block from "../parts/Block"
-import LevelBase from "../parts/LevelBase"
-import Spinner from "../parts/Spinner"
+import Block from "../../parts/Block"
+import LevelBase from "../../parts/LevelBase"
+import Spinner from "../../parts/Spinner"
 
-export default function Level5(props) {
+export default function IntroLevel5(props) {
 
     return (
         <LevelBase start_pos={[0, 0.5, 0]} end_pos={[9, 0.5, 0]} name="level_5">
