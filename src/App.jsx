@@ -172,7 +172,6 @@ function Scene() {
   return (
     <>
       <Canvas shadows camera={{ position: [-8, 12, -25], fov: 25 }}>
-        {/* <color attach="background" args={['black']} /> */}
         <directionalLight castShadow position={[5, 5, 5]} />
         <OrbitControls />
         <Suspense fallback={<LoadSpinner />}>
