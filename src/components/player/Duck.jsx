@@ -23,8 +23,10 @@ export default function Duck(props) {
     const [keyBackLeft, setKeyBackLeft] = useState(false)
     const [keyBackRight, setKeyBackRight] = useState(false)
     const [keyThrottle, setKeyThrottle] = useState(false)
+    const [keyStuck, setKeyStuck] = useState(false)
+    const [isUnsticking, setIsUnsticking] = useState(false)
 
-    const { keys, setIsComplete, isComplete, currentLevel, handleResets } = useContext(ConfigContext)
+    const { keys, setIsComplete, isComplete, currentLevel, handleResets, handleUnstuck } = useContext(ConfigContext)
 
     const isDebug = false
 
@@ -49,6 +51,7 @@ export default function Duck(props) {
         setKeyFrontLeft(false)
         setKeyFrontRight(false)
         setKeyThrottle(false)
+        setKeyStuck(false)
 
         handleResets()
     }
@@ -69,6 +72,9 @@ export default function Duck(props) {
             }
             if (e.key === keys.throttle) {
                 setKeyThrottle(true)
+            }
+            if (e.key === keys.stuck) {
+                setKeyStuck(true)
             }
             if (e.key === keys.reset) {
                 handleReset()
@@ -92,6 +98,9 @@ export default function Duck(props) {
             if (e.key === keys.throttle) {
                 setKeyThrottle(false)
             }
+            if (e.key === keys.stuck) {
+                setKeyStuck(false)
+            }
         }
 
         window.addEventListener("keydown", handleKeyDown)
@@ -114,6 +123,8 @@ export default function Duck(props) {
         f.applyQuaternion(rigidBodyRef.current.rotation())
         return f
     }
+
+    const randN = (n) => (Math.random() * 2 - 1) * n
 
     useFrame(() => {
         let pos = [0,0,0]
@@ -154,6 +165,14 @@ export default function Duck(props) {
             const localForce = getLocalForce(force[0], force[1], force[2])
             
             rigidBodyRef.current.applyImpulseAtPoint(localForce, localPosition)
+        }
+        if (keyStuck) {
+            if (!isUnsticking) {
+                setIsUnsticking(true)
+                handleUnstuck()
+                rigidBodyRef.current.applyTorqueImpulse(new Vector3(randN(10), randN(10), randN(10)))
+                setTimeout(() => setIsUnsticking(false), 500)
+            }
         }
     })
 

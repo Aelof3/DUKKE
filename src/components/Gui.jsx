@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react'
 import { ConfigContext } from './context/Config'
 
 export default function Gui(props) {
-    const { resets, quacks, currentLevel, totalLevels, startDate } = useContext(ConfigContext)
+    const { resets, quacks, currentLevel, totalLevels, startDate, unstucks } = useContext(ConfigContext)
     
     const [nowDate, setNowDate] = useState((new Date().getTime() - startDate.getTime()) / 1000)
 
@@ -28,19 +28,20 @@ export default function Gui(props) {
     return (
         <div className="pointer-events-none	fixed z-50 w-screen inset-0 h-screen">
             <div className="absolute top-6 left-6 flex flex-col gap-2">
-                <p>
+                <p className='drop-shadow-2xl shadow-black'>
                     keys:
                 </p>
                 <ul className="grid grid-cols-2 gap-2">
-                    <li className="px-4 py-2 border-white border flex items-center justify-center">q</li>
-                    <li className="px-4 py-2 border-white border flex items-center justify-center">w</li>
-                    <li className="px-4 py-2 border-white border flex items-center justify-center">a</li>
-                    <li className="px-4 py-2 border-white border flex items-center justify-center">s</li>
-                    <li className="px-4 py-2 border-white border flex items-center justify-center col-span-2">space</li>
+                    <li className="px-4 py-2 border-white border flex items-center justify-center bg-[rgba(17,24,39,0.5)]">q</li>
+                    <li className="px-4 py-2 border-white border flex items-center justify-center bg-[rgba(17,24,39,0.5)]">w</li>
+                    <li className="px-4 py-2 border-white border flex items-center justify-center bg-[rgba(17,24,39,0.5)]">a</li>
+                    <li className="px-4 py-2 border-white border flex items-center justify-center bg-[rgba(17,24,39,0.5)]">s</li>
+                    <li className="px-4 py-2 border-white border flex items-center justify-center col-span-2 bg-[rgba(17,24,39,0.5)]">space</li>
                 </ul>
                 <ul className="grid grid-cols-2 gap-2">
-                    <li className="px-4 py-2 border-white border flex items-center justify-center">reset: r</li>
-                    <li className="px-4 py-2 border-white border flex items-center justify-center">menu: esc</li>
+                    <li className="px-4 py-2 border-white border flex items-center justify-center bg-[rgba(17,24,39,0.5)]">reset: r</li>
+                    <li className="px-4 py-2 border-white border flex items-center justify-center bg-[rgba(17,24,39,0.5)]">unstuck: h</li>
+                    <li className="px-4 py-2 border-white border flex items-center justify-center bg-[rgba(17,24,39,0.5)]">menu: esc</li>
                 </ul>
                     
             </div>
@@ -48,6 +49,7 @@ export default function Gui(props) {
                 <ul className="flex flex-col gap-4">
                     <li>Section: Introduction</li>
                     <li>Current Level: {currentLevel}/{totalLevels}</li>
+                    <li>Times Stuck: {unstucks}</li>
                     <li>Resets: {resets} </li>
                     <li>Time Since Start: {fN(h)}:{fN(m)}:{fN(s)}</li>
                     {/* <li>Quacks: {quacks}</li> */}

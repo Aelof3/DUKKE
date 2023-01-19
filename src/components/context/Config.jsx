@@ -9,7 +9,8 @@ export const ConfigProvider = ({ children }) => {
         back_left: 'a',
         back_right: 's',
         throttle: ' ',
-        reset: 'r'
+        reset: 'r',
+        stuck: 'h'
     })
 
     const [quacks, setQuacks] = useState(0)
@@ -19,6 +20,9 @@ export const ConfigProvider = ({ children }) => {
 
     const rL = localStorage.getItem('resets')
     const [resets, setResets] = useState(rL ? parseInt(rL) : 0)
+
+    const uL = localStorage.getItem('unstucks')
+    const [unstucks, setUnstucks] = useState(uL ? parseInt(uL) : 0)
 
     const totalLevels = 9
 
@@ -41,9 +45,17 @@ export const ConfigProvider = ({ children }) => {
         setIsComplete(true)
     }
 
+    const handleUnstuck = () => {
+        setUnstucks(nU => nU + 1)
+    }
+
     const handleResets = () => {
         setResets(nR => nR + 1)
     }
+
+    useEffect(() => {
+        localStorage.setItem('unstucks', unstucks)
+    }, [unstucks])
 
     useEffect(() => {
         localStorage.setItem('currentLevel', currentLevel)
@@ -104,8 +116,12 @@ export const ConfigProvider = ({ children }) => {
 
                 isComplete,
                 setIsComplete,
+               
                 resets,
                 handleResets,
+
+                unstucks,
+                handleUnstuck,
 
                 startDate,
             }}>

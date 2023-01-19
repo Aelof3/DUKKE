@@ -12,6 +12,8 @@ import { Physics, Debug } from '@react-three/rapier'
 import Duck from './components/player/Duck'
 import PauseMenu from './components/menus/PauseMenu'
 import { ConfigProvider, ConfigContext } from './components/context/Config'
+import { addUrlBase } from './util/helpers'
+
 
 import IntroLevel1 from './components/levels/intro/IntroLevel1'
 import IntroLevel2 from './components/levels/intro/IntroLevel2'
@@ -61,10 +63,18 @@ function Scene() {
     }
   }, [pause])
 
+  const hdrs = [
+    'arboretum_2k.hdr',
+    'bell_park_dawn_2k.hdr',
+    'park_bench_2k.hdr',
+    'pond_bridge_night_2k.hdr',
+    'spruit_sunrise_2k.hdr',
+  ]
+
   return (
     <>
       <Canvas shadows camera={{ position: [-8, 12, -25], fov: 25 }}>
-        <color attach="background" args={['black']} />
+        {/* <color attach="background" args={['black']} /> */}
         <directionalLight castShadow position={[5, 5, 5]} />
         <OrbitControls />
         <Suspense fallback={<LoadSpinner />}>
@@ -84,7 +94,12 @@ function Scene() {
               <Duck />
           </Physics>
         </Suspense>
-        <Environment preset="city" />
+        <Environment 
+          background 
+          blur={1}
+          files={addUrlBase(`hdr/${hdrs[0]}`)}
+          resolution={1080}
+          />
       </Canvas>
       <Gui />
       {pause && <PauseMenu />}
