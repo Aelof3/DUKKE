@@ -25,6 +25,8 @@ import IntroLevel7 from './components/levels/intro/IntroLevel7'
 import IntroLevel8 from './components/levels/intro/IntroLevel8'
 import IntroLevel9 from './components/levels/intro/IntroLevel9'
 
+import CityLevel1 from './components/levels/city/CityLevel1'
+
 
 import Gui from './components/Gui'
 
@@ -63,13 +65,109 @@ function Scene() {
     }
   }, [pause])
 
-  const hdrs = [
-    'arboretum_2k.hdr',
-    'bell_park_dawn_2k.hdr',
-    'park_bench_2k.hdr',
-    'pond_bridge_night_2k.hdr',
-    'spruit_sunrise_2k.hdr',
+  const park_hdrs = [
+    'park_arboretum_2k.hdr',
+    'park_bell_park_dawn_2k.hdr',
+    'park_park_bench_2k.hdr',
+    'park_pond_bridge_night_2k.hdr',
+    'park_spruit_sunrise_2k.hdr',
   ]
+
+  const city_hdrs = [
+    'city_canary_wharf_2k.hdr',
+    'city_potsdamer_platz_2k.hdr',
+    'city_royal_esplanade_2k.hdr',
+    'city_sunset_jhbcentral_2k.hdr',
+  ]
+
+  const desert_hdrs = [
+    'desert_chapmans_drive_2k.hdr',
+    'desert_goegap_2k.hdr',
+    'desert_kiara_4_mid-morning_2k.hdr',
+    'desert_lenong_1_2k.hdr',
+    'desert_lenong_2_2k.hdr',
+    'desert_quarry_02_2k.hdr',
+    'desert_sunset_in_the_chalk_quarry_2k.hdr',
+    'desert_syferfontein_18d_clear_2k.hdr',
+  ]
+
+  const island_hdrs = [
+    'island_lakeside_2k.hdr',
+    'island_pond_2k.hdr',
+    'island_pool_2k.hdr',
+    'island_simons_town_rocks_2k.hdr',
+  ]
+
+  const ocean_hdrs = [
+    'ocean_kloofendal_48d_partly_cloudy_puresky_2k.hdr',
+  ]
+
+  const winter_hdrs = [
+    'winter_birchwood_2k.hdr',
+    'winter_snow_field_2k.hdr',
+    'winter_snowy_field_2k.hdr',
+    'winter_snowy_forest_path_01_2k.hdr',
+    'winter_snowy_forest_path_02_2k.hdr',
+    'winter_snowy_park_01_2k.hdr',
+    'winter_winter_lake_01_2k.hdr',
+  ]
+
+
+  const sections = [
+    {
+      id: 0,
+      name: 'Introduction',
+      env: park_hdrs[4]
+    },
+    {
+      id: 1,
+      name: 'City',
+      env: city_hdrs[0]
+    },
+    {
+      id: 2,
+      name: 'Desert',
+      env: desert_hdrs[1] // 1 4 6
+    },
+    {
+      id: 3,
+      name: 'Island',
+      env: island_hdrs[3] // 2
+    },
+    {
+      id: 4,
+      name: 'Ocean',
+      env: ocean_hdrs[0]
+    },
+    {
+      id: 5,
+      name: 'Winter',
+      env: winter_hdrs[4]
+    },
+  ]
+
+  const getCurrentSection = () => {
+    if (currentLevel < 10) {
+      return sections[0]
+    }
+    if (currentLevel < 20) {
+      return sections[1]
+    }
+    if (currentLevel < 30) {
+      return sections[2]
+    }
+    if (currentLevel < 40) {
+      return sections[3]
+    }
+    if (currentLevel < 50) {
+      return sections[4]
+    }
+    if (currentLevel < 60) {
+      return sections[5]
+    }
+  }
+
+  const currentSection = getCurrentSection()
 
   return (
     <>
@@ -80,6 +178,8 @@ function Scene() {
         <Suspense fallback={<LoadSpinner />}>
           <Physics colliders={false} paused={pause} interpolate>
               {/* <Debug /> */}
+              
+              {/* INTRO */}
               {currentLevel === 1 && <IntroLevel1 />}
               {currentLevel === 2 && <IntroLevel2 />}
               {currentLevel === 3 && <IntroLevel3 />}
@@ -90,6 +190,9 @@ function Scene() {
               {currentLevel === 8 && <IntroLevel8 />}
               {currentLevel === 9 && <IntroLevel9 />}
 
+              {/* CITY */}
+              {currentLevel === 10 && <CityLevel1 />}
+
 
               <Duck />
           </Physics>
@@ -97,11 +200,11 @@ function Scene() {
         <Environment 
           background 
           blur={1}
-          files={addUrlBase(`hdr/${hdrs[0]}`)}
-          resolution={1080}
+          files={addUrlBase(`hdr/${currentSection.env}`)}
+          resolution={256}
           />
       </Canvas>
-      <Gui />
+      <Gui section={currentSection.name} />
       {pause && <PauseMenu />}
     </>
   )

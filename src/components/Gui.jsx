@@ -47,7 +47,7 @@ export default function Gui(props) {
             </div>
             <div className="absolute top-6 right-8">
                 <ul className="flex flex-col gap-4">
-                    <li>Section: Introduction</li>
+                    <li>Section: {props?.section || 'N/A'}</li>
                     <li>Current Level: {currentLevel}/{totalLevels}</li>
                     <li>Times Stuck: {unstucks}</li>
                     <li>Resets: {resets} </li>

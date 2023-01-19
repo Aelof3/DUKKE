@@ -6,7 +6,7 @@ import Engine from "./Engine"
 import { ConfigContext } from "../context/Config"
 import { addUrlBase } from "../../util/helpers"
 import { Quaternion, Vector3, Vector4 } from "three"
-import { RigidBody } from "@react-three/rapier"
+import { CuboidCollider, RigidBody } from "@react-three/rapier"
 
 const DuckModel = (props) => {
     const duckScale = 0.4
@@ -129,7 +129,7 @@ export default function Duck(props) {
     useFrame(() => {
         let pos = [0,0,0]
         let force = [0,0,0]
-        const forcePerEngine = 0.5
+        const forcePerEngine = 0.075
         
         if (keyFrontLeft) {
             pos[0] += 0.25
@@ -170,7 +170,7 @@ export default function Duck(props) {
             if (!isUnsticking) {
                 setIsUnsticking(true)
                 handleUnstuck()
-                rigidBodyRef.current.applyTorqueImpulse(new Vector3(randN(10), randN(10), randN(10)))
+                rigidBodyRef.current.applyTorqueImpulse(new Vector3(randN(1), randN(1), randN(1)))
                 setTimeout(() => setIsUnsticking(false), 500)
             }
         }
@@ -186,7 +186,7 @@ export default function Duck(props) {
     return (
         <RigidBody 
                 ref={rigidBodyRef}
-                colliders={"cuboid"} 
+                
                 name="duck"
                 type={"dynamic"}
                 linearDamping={0}
@@ -201,6 +201,13 @@ export default function Duck(props) {
                 }}
             >
             <group ref={ref} position={startingPosition}>
+                
+                <CuboidCollider args={[0.3, 0.3, 0.2]} position={[0, -0.1, 0]} name="duck_collider" />
+                
+                
+
+
+
                 <Box castShadow args={[0.5, 0.05, 0.3]} position={[0, -0.2, 0]} name="duck_base">
                     <meshStandardMaterial color={"#999900"} />
                 </Box>
