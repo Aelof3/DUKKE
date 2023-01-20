@@ -48,7 +48,7 @@ export default function App() {
 function Scene() {
   const [pause, setPause] = useState(false)
 
-  const { currentLevel } = useContext(ConfigContext)
+  const { currentLevel, isDebug } = useContext(ConfigContext)
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -172,11 +172,12 @@ function Scene() {
   return (
     <>
       <Canvas shadows camera={{ position: [-8, 12, -25], fov: 25 }}>
+        <ambientLight intensity={0.25}/>
         <directionalLight castShadow position={[5, 5, 5]} />
         <OrbitControls />
         <Suspense fallback={<LoadSpinner />}>
           <Physics colliders={false} paused={pause} interpolate>
-              {/* <Debug /> */}
+              {isDebug && <Debug />}
               
               {/* INTRO */}
               {currentLevel === 1 && <IntroLevel1 />}

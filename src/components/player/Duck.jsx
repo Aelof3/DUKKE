@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState, useRef } from "react"
-import { Box, useGLTF, useHelper } from "@react-three/drei"
+import { useContext, useEffect, useState, useRef, useMemo } from "react"
+import { Box, useGLTF, useFBX, useHelper } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 
 import Engine from "./Engine"
@@ -9,10 +9,14 @@ import { Quaternion, Vector3, Vector4 } from "three"
 import { CuboidCollider, RigidBody } from "@react-three/rapier"
 
 const DuckModel = (props) => {
-    const duckScale = 0.4
-    const duckUrl = addUrlBase('models/Duck.gltf')
-    const gltf = useGLTF(duckUrl)
-    return <primitive {...props} object={gltf.scene} dispose={null} scale={[duckScale,duckScale,duckScale]} />
+    const duckScale = 0.0017
+    /* const duckUrl = addUrlBase('models/Duck.gltf')
+    const gltf = useGLTF(duckUrl) */
+    const duckUrl = addUrlBase('models/Dukke.fbx')
+    const fbx = useMemo(()=>useFBX(duckUrl), [duckUrl])
+    const model = fbx.clone()
+    
+    return <primitive {...props} object={model} dispose={null} scale={[duckScale,duckScale,duckScale]} />
 }
 
 export default function Duck(props) {
@@ -26,9 +30,12 @@ export default function Duck(props) {
     const [keyStuck, setKeyStuck] = useState(false)
     const [isUnsticking, setIsUnsticking] = useState(false)
 
-    const { keys, setIsComplete, isComplete, currentLevel, handleResets, handleUnstuck } = useContext(ConfigContext)
+    const { 
+        keys, setIsComplete, isComplete, currentLevel, 
+        handleResets, handleUnstuck
+    } = useContext(ConfigContext)
 
-    const isDebug = false
+    
 
     const ref = useRef()
     const rigidBodyRef = useRef()
@@ -202,25 +209,25 @@ export default function Duck(props) {
             >
             <group ref={ref} position={startingPosition}>
                 
-                <CuboidCollider args={[0.3, 0.3, 0.2]} position={[0, -0.1, 0]} name="duck_collider" />
+                <CuboidCollider args={[0.3, 0.3, 0.25]} position={[0, -0.1, 0]} name="duck_collider" />
                 
                 
 
 
 
-                <Box castShadow args={[0.5, 0.05, 0.3]} position={[0, -0.2, 0]} name="duck_base">
+                {/* <Box castShadow args={[0.5, 0.05, 0.3]} position={[0, -0.2, 0]} name="duck_base">
                     <meshStandardMaterial color={"#999900"} />
-                </Box>
+                </Box> */}
 
                 {/* <axesHelper args={[5]} /> */}
 
-                <Engine position={[0.25, -0.3, -0.15]} toggle={keyFrontLeft || keyThrottle} name="engine_front_left" />
+                {/* <Engine position={[0.25, -0.3, -0.15]} toggle={keyFrontLeft || keyThrottle} name="engine_front_left" />
                 <Engine position={[0.25, -0.3, 0.15]} toggle={keyFrontRight || keyThrottle} name="engine_front_right" />
                 <Engine position={[-0.25, -0.3, -0.15]} toggle={keyBackLeft || keyThrottle} name="engine_back_left" />
-                <Engine position={[-0.25, -0.3, 0.15]} toggle={keyBackRight || keyThrottle} name="engine_back_right" />
+                <Engine position={[-0.25, -0.3, 0.15]} toggle={keyBackRight || keyThrottle} name="engine_back_right" /> */}
                 
 
-                <DuckModel position={[-0.05, -0.4, 0]} name="duck_model" />  
+                <DuckModel position={[0.02, -0.4, 0]} name="duck_model" />  
             </group>
         </RigidBody>
     )

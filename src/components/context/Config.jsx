@@ -13,6 +13,8 @@ export const ConfigProvider = ({ children }) => {
         stuck: 'h'
     })
 
+    const [isDebug, setIsDebug] = useState(false)
+
     const [quacks, setQuacks] = useState(0)
 
     const sD = localStorage.getItem('startDate')
@@ -52,6 +54,12 @@ export const ConfigProvider = ({ children }) => {
     const handleResets = () => {
         setResets(nR => nR + 1)
     }
+
+    useEffect(() => {
+        if (window?.location?.href?.includes('debug')) {
+            setIsDebug(true)
+        }
+    },[])
 
     useEffect(() => {
         localStorage.setItem('unstucks', unstucks)
@@ -124,6 +132,8 @@ export const ConfigProvider = ({ children }) => {
                 handleUnstuck,
 
                 startDate,
+
+                isDebug,
             }}>
             {children}
         </ConfigContext.Provider>
