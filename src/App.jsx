@@ -4,9 +4,10 @@ import {
   Routes,
   Route
 } from "react-router-dom"
-import { OrbitControls, Environment, Html } from '@react-three/drei'
+import { OrbitControls, Environment, Html, Stats } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import MainMenu from './components/menus/MainMenu'
+import { Perf } from 'r3f-perf'
 
 import { Physics, Debug } from '@react-three/rapier'
 import Duck from './components/player/Duck'
@@ -203,6 +204,8 @@ function Scene() {
           files={addUrlBase(`hdr/${currentSection.env}`)}
           resolution={256}
           />
+          {isDebug && <Stats showPanel={2} />}
+          {isDebug && <Perf position='bottom-left' deepAnalyze={true} />}
       </Canvas>
       <Gui section={currentSection.name} />
       {pause && <PauseMenu />}
