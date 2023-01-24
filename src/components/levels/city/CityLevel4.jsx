@@ -39,8 +39,8 @@ export default function CityLevel4(props) {
                 <Block args={[0.2, 70, 20]} position={[9.5,35,-10]} rotation={[0,Math.PI/2,0]} color={wallColor} />
                 
                 {/* DONT FORGET TO UNCOMMENT */}
-                <Block args={[0.2, 70, 20]} position={[9.5,35,10.1]} rotation={[0,Math.PI/2,0]} opacity={0.01} color={"black"}/>
-                <Block args={[0.2, 70, 20]} position={[-0.5,35,0]} opacity={0.01} color={"white"} />
+                <Block args={[0.2, 70, 20]} position={[9.6,35,10.1]} rotation={[0,Math.PI/2,0]} opacity={0.0} color={"black"}/>
+                <Block args={[0.2, 70, 20]} position={[-0.5,35,0]} opacity={0.0} color={"white"} />
 
             </RigidBody>
 
