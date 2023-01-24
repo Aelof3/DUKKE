@@ -10,7 +10,9 @@ export const ControlsProvider = ({ children }) => {
         back_right: 's',
         throttle: ' ',
         reset: 'r',
-        stuck: 'h'
+        stuck: 'h',
+        rotate_left: 'z',
+        rotate_right: 'x',
     })
 
     const [pause, setPause] = useState(false)
@@ -22,6 +24,9 @@ export const ControlsProvider = ({ children }) => {
     const [keyThrottle, setKeyThrottle] = useState(false)
     const [keyStuck, setKeyStuck] = useState(false)
     const [isUnsticking, setIsUnsticking] = useState(false)
+
+    const [keyRotateLeft, setKeyRotateLeft] = useState(false)
+    const [keyRotateRight, setKeyRotateRight] = useState(false)
 
     return (
         <ControlsContext.Provider 
@@ -47,6 +52,12 @@ export const ControlsProvider = ({ children }) => {
                 setKeyThrottle,
                 setKeyStuck,
                 setIsUnsticking,
+
+                keyRotateLeft,
+                keyRotateRight,
+
+                setKeyRotateLeft,
+                setKeyRotateRight
             }}>
             {children}
         </ControlsContext.Provider>

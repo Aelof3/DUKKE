@@ -5,7 +5,7 @@ import Block from "../../parts/Block"
 import Floor from "../../parts/Floor"
 import LevelBase from "../../parts/LevelBase"
 
-export default function CityLevel1(props) {
+export default function CityLevel2(props) {
 
     const carRef1 = useRef()
     const carRef2 = useRef()
@@ -30,19 +30,19 @@ export default function CityLevel1(props) {
 
     return (
         <LevelBase 
-            level={1}
-            name="city_level_1"
+            level={2}
+            name="city_level_2"
             start_pos={[0, 0.5, 14.5]}
-            end_pos={[29, 0.5, -14.5]}
+            end_pos={[28, 20.5, 13.5]}
         >
             <RigidBody type={"fixed"} colliders="cuboid">
                 <Floor args={[30, 0.2, 30]} position={[14.5,-0.1,0]} />
                 
-                <Block args={[10, 25, buildingWidth]} position={[4.5, 12.5, -10]} color={"red"} />
+                <Block args={[10, 12, buildingWidth]} position={[4.5, 6, -10]} color={"red"} />
                 <Block args={[7, 25, buildingWidth]} position={[6, 12.5, 10]} color={"blue"} />
 
-                <Block args={[10, 25, buildingWidth]} position={[24.5, 12.5, 10]} color={"green"} />
-                <Block args={[7, 25, buildingWidth]} position={[22.5, 12.5, -10]} color={"yellow"} />
+                <Block args={[10, 20, buildingWidth]} position={[24.5, 10, 10]} color={"green"} />
+                <Block args={[10, 25, buildingWidth]} position={[24.5, 12.5, -10]} color={"yellow"} />
             </RigidBody>
 
             <RigidBody ref={carRef1} position={[22,2,0]} type={"fixed"} colliders="cuboid">
@@ -50,8 +50,8 @@ export default function CityLevel1(props) {
                 <Block args={[7, 4, 5]} color={"black"} />
             </RigidBody>
 
-            <RigidBody ref={carRef2} position={[14.5,2,14.5]} rotation={[0,Math.PI/2,0]} type={"fixed"} colliders="cuboid">
-                <Block args={[7, 4, 5]} color={"black"} />
+            <RigidBody ref={carRef2} position={[14.5,4,14.5]} rotation={[0,Math.PI/2,0]} type={"fixed"} colliders="cuboid">
+                <Block args={[12, 8, 5]} color={"black"} />
             </RigidBody>
         </LevelBase>
     )

@@ -49,8 +49,7 @@ export default function Zone({ env, zone, slug }) {
                         {isDebug && <Debug />}
 
                         <Outlet />
-
-                        <Duck />
+                        
                     </Physics>
                 </Suspense>
                 <Environment

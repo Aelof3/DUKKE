@@ -61,10 +61,10 @@ function LevelSelect(props) {
                     <ZoneItem zone="intro" count={9} bg="#480043" />
                 </div>
 
-                {/* <div className="z-10 flex flex-col gap-4">
+                <div className="z-10 flex flex-col gap-4">
                     <h2 className="z-10">City</h2>
-                    <ZoneItem zone="city" count={1} bg="#480043" />
-                </div> */}
+                    <ZoneItem zone="city" count={2} bg="#480043" />
+                </div>
 
                 <Link 
                     to="/"

@@ -9,11 +9,11 @@ import { useRandomColorFlash } from "../../util/hooks"
 export default function Block(props) {
     const ref = useRef()
 
-    useRandomColorFlash(ref)
+    if (props?.flash) useRandomColorFlash(ref)
 
     return (
         <Box ref={ref} name="floor" {...props}>
-            <meshStandardMaterial opacity={props?.opacity || 1} transparent={true}/>
+            <meshStandardMaterial opacity={props?.opacity || 1} transparent={true} color={props?.color || 'blue'}/>
         </Box>
     )
 }

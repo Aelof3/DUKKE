@@ -13,14 +13,14 @@ import Engine from "./Engine"
 const DuckModel = (props) => {
     const duckScale = 0.0017
     const duckUrl = addUrlBase('models/Dukke.fbx')
-    const fbx = useMemo(() => useFBX(duckUrl), [duckUrl])
+    const fbx = useMemo(() => useFBX(duckUrl), [])
     const model = fbx.clone()
 
     return <primitive {...props} object={model} dispose={null} scale={[duckScale, duckScale, duckScale]} />
 }
 
 export default function Duck(props) {
-    const startingPosition = [0, 1.4, 0]
+    const { startPos } = props
 
     const {
         handleLevelComplete, isComplete, currentLevel,
@@ -35,11 +35,11 @@ export default function Duck(props) {
         keyBackRight, setKeyBackRight,
         keyThrottle, setKeyThrottle,
         keyStuck, setKeyStuck,
-        isUnsticking, setIsUnsticking
+        isUnsticking, setIsUnsticking,
+        keyRotateLeft, setKeyRotateLeft,
+        keyRotateRight, setKeyRotateRight
 
     } = useContext(ControlsContext)
-
-
 
     const ref = useRef()
     const rigidBodyRef = useRef()
@@ -82,9 +82,18 @@ export default function Duck(props) {
             if (e.key === keys.throttle) {
                 setKeyThrottle(true)
             }
+            
+            if (e.key === keys.rotate_left) {
+                setKeyRotateLeft(true)
+            }
+            if (e.key === keys.rotate_right) {
+                setKeyRotateRight(true)
+            }
+
             if (e.key === keys.stuck) {
                 setKeyStuck(true)
             }
+
             if (e.key === keys.reset) {
                 handleReset()
             }
@@ -110,6 +119,13 @@ export default function Duck(props) {
             if (e.key === keys.stuck) {
                 setKeyStuck(false)
             }
+
+            if (e.key === keys.rotate_left) {
+                setKeyRotateLeft(false)
+            }
+            if (e.key === keys.rotate_right) {
+                setKeyRotateRight(false)
+            }
         }
 
         window.addEventListener("keydown", handleKeyDown)
@@ -121,16 +137,22 @@ export default function Duck(props) {
         }
     }, [])
 
-    const getLocalPosition = (x, y, z, p = new Vector3(), q = new Quaternion()) => {
-        p.set(x, y, z)
-        ref.current.localToWorld(p)
-        return p
+    const pv3 = new Vector3()
+    const fv3 = new Vector3()
+    const angvel3 = new Vector3()
+
+    const avl = 25 // max angular velocity
+
+    const getLocalPosition = (x, y, z) => {
+        pv3.set(x, y, z)
+        ref.current.localToWorld(pv3)
+        return pv3
     }
 
-    const getLocalForce = (x, y, z, f = new Vector3(), q = new Quaternion(), d = new Vector3()) => {
-        f.set(x, y, z)
-        f.applyQuaternion(rigidBodyRef.current.rotation())
-        return f
+    const getLocalForce = (x, y, z) => {
+        fv3.set(x, y, z)
+        fv3.applyQuaternion(rigidBodyRef.current.rotation())
+        return fv3
     }
 
     const randN = (n) => (Math.random() * 2 - 1) * n
@@ -179,27 +201,40 @@ export default function Duck(props) {
             if (!isUnsticking) {
                 setIsUnsticking(true)
                 handleUnstuck()
-                rigidBodyRef.current.applyTorqueImpulse(new Vector3(randN(1), randN(1), randN(1)))
+                rigidBodyRef.current.applyTorqueImpulse({x:randN(1), y:randN(1), z:randN(1)})
                 setTimeout(() => setIsUnsticking(false), 500)
             }
         }
+        if (keyRotateLeft) {
+            /* rigidBodyRef.current.applyTorqueImpulse({x:0, y:0.025, z:0}) */
+            rigidBodyRef.current.applyTorqueImpulse(getLocalForce(0,0.025,0))//{x:0, y:0.025, z:0})
+        }
+        if (keyRotateRight) {
+            /* rigidBodyRef.current.applyTorqueImpulse({x:0, y:-0.025, z:0}) */
+            rigidBodyRef.current.applyTorqueImpulse(getLocalForce(0,-0.025,0))//{x:0, y:-0.025, z:0})
+        }
+
+        // clamp rotation speed
+        const angvel = rigidBodyRef.current.angvel()
+        const newAngvel = angvel3.set(Math.max(Math.min(angvel.x,avl),-avl), Math.max(Math.min(angvel.y,avl),-avl), Math.max(Math.min(angvel.z,avl),-avl))
+        rigidBodyRef.current.setAngvel(newAngvel)
     })
 
     useEffect(() => {
-        if (isComplete) {
-            handleReset()
-        }
+        handleReset()
     }, [isComplete])
 
-
+    const trail = useMemo(() => <Trail target={ref} width={4} length={4} decay={5} color="yellow" />, [])
+    
     return (
+        <>
         <RigidBody
             ref={rigidBodyRef}
-
             name="duck"
             linearDamping={0}
             angularDamping={0}
             mass={1}
+            rotation={[0, 0, 0]}
             onCollisionEnter={({ manifold, target, other }) => {
                 if (other.rigidBodyObject) {
                     if (target.rigidBodyObject.name === 'duck' && other.rigidBodyObject.name === 'end') {
@@ -208,23 +243,33 @@ export default function Duck(props) {
                 }
             }}
         >
-            <group ref={ref} position={startingPosition}>
+            <group ref={ref} position={startPos}>
+                <CuboidCollider args={[0.3, 0.3, 0.25]} position={[0,-0.1,0]} name="duck_collider" />
 
-                <CuboidCollider args={[0.3, 0.3, 0.25]} position={[0, -0.1, 0]} name="duck_collider" />
-
-                
-                
-
-                <Engine position={[0.2, -0.3, -0.21]} toggle={keyFrontLeft || keyThrottle} name="engine_front_left" />
-                <Engine position={[0.2, -0.3, 0.21]} toggle={keyFrontRight || keyThrottle} name="engine_front_right" />
-                <Engine position={[-0.25, -0.3, -0.21]} toggle={keyBackLeft || keyThrottle} name="engine_back_left" />
-                <Engine position={[-0.25, -0.3, 0.21]} toggle={keyBackRight || keyThrottle} name="engine_back_right" /> 
-                
-               
-
+                {/* <Engines /> */}
 
                 <DuckModel position={[0.02, -0.4, 0]} name="duck_model" />
             </group>
         </RigidBody>
+        </>
+    )
+}
+
+const Engines = (props) => {
+    const {
+        keyFrontLeft,
+        keyFrontRight,
+        keyBackLeft,
+        keyBackRight,
+        keyThrottle,
+    } = useContext(ControlsContext)
+
+    return (
+        <group>
+            <Engine position={[0.2, -0.3, -0.21]} toggle={keyFrontLeft || keyThrottle} name="engine_front_left" />
+            <Engine position={[0.2, -0.3, 0.21]} toggle={keyFrontRight || keyThrottle} name="engine_front_right" />
+            <Engine position={[-0.25, -0.3, -0.21]} toggle={keyBackLeft || keyThrottle} name="engine_back_left" />
+            <Engine position={[-0.25, -0.3, 0.21]} toggle={keyBackRight || keyThrottle} name="engine_back_right" /> 
+        </group>
     )
 }

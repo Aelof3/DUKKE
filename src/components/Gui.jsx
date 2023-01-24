@@ -10,7 +10,9 @@ export default function Gui(props) {
     
     const {
         keys,
-        keyFrontLeft, keyFrontRight, keyBackLeft, keyBackRight,
+        keyFrontLeft, keyFrontRight, 
+        keyBackLeft, keyBackRight,
+        keyRotateLeft, keyRotateRight,
         keyThrottle, keyStuck, isUnsticking
     } = useContext(ControlsContext)
 
@@ -41,7 +43,7 @@ export default function Gui(props) {
         <div className="pointer-events-none	fixed z-50 w-screen inset-0 h-screen">
             <div className="absolute top-6 left-6 flex flex-col gap-2">
                 <p className='drop-shadow-2xl shadow-black'>
-                    keys:
+                    engines:
                 </p>
                 <ul className="grid grid-cols-2 gap-2">
                     <li className={`p-2 border-white border flex items-center justify-center ${getBG(keyFrontLeft)}`}>{keys.front_left}</li>
@@ -50,6 +52,16 @@ export default function Gui(props) {
                     <li className={`p-2 border-white border flex items-center justify-center ${getBG(keyBackRight)}`}>{keys.back_right}</li>
                     <li className={`p-2 border-white border flex items-center justify-center col-span-2 ${getBG(keyThrottle)}`}>space</li>
                 </ul>
+                <p className='drop-shadow-2xl shadow-black'>
+                    turn:
+                </p>
+                <ul className="grid grid-cols-2 gap-2">
+                    <li className={`p-2 border-white border flex items-center justify-center ${getBG(keyRotateLeft)}`}>left: {keys.rotate_left}</li>
+                    <li className={`p-2 border-white border flex items-center justify-center ${getBG(keyRotateRight)}`}>right: {keys.rotate_right}</li>
+                </ul>
+                <p className='drop-shadow-2xl shadow-black'>
+                    other:
+                </p>
                 <ul className="grid grid-cols-2 gap-2">
                     <li className={`px-4 py-2 border-white border flex items-center justify-center bg-[rgba(17,24,39,0.5)]`}>reset: {keys.reset}</li>
                     <li className={`px-4 py-2 border-white border flex items-center justify-center ${getBG(keyStuck)}`}>unstuck: {keys.stuck}</li>
