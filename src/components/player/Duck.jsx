@@ -224,7 +224,7 @@ export default function Duck(props) {
         handleReset()
     }, [isComplete])
 
-    const trail = useMemo(() => <Trail target={ref} width={4} length={4} decay={5} color="yellow" />, [])
+    /* const trail = useMemo(() => <Trail target={ref} width={4} length={4} decay={5} color="yellow" />, []) */
     
     return (
         <>
@@ -239,6 +239,9 @@ export default function Duck(props) {
                 if (other.rigidBodyObject) {
                     if (target.rigidBodyObject.name === 'duck' && other.rigidBodyObject.name === 'end') {
                         handleLevelComplete()
+                    }
+                    if (target.rigidBodyObject.name === 'duck' && other.rigidBodyObject.name === 'car') {
+                        handleReset()
                     }
                 }
             }}

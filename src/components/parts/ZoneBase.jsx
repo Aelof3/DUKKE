@@ -15,7 +15,7 @@ import Duck from "../player/Duck"
 import Gui from "../Gui"
 import LoadSpinner from "./LoadSpinner"
 
-export default function Zone({ env, zone, slug }) {
+export default function Zone({ env, zone, camera, slug }) {
     const { currentLevel, isDebug, setCurrentZone } = useContext(ConfigContext)
     const { pause, setPause } = useContext(ControlsContext)
 
@@ -40,7 +40,7 @@ export default function Zone({ env, zone, slug }) {
 
     return (
         <>
-            <Canvas shadows camera={{ position: [-8, 12, -25], fov: 25 }}>
+            <Canvas shadows camera={camera}>
                 <ambientLight intensity={0.25} />
                 <directionalLight castShadow position={[5, 5, 5]} />
                 <OrbitControls />

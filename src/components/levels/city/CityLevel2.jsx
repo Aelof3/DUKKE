@@ -45,13 +45,13 @@ export default function CityLevel2(props) {
                 <Block args={[10, 25, buildingWidth]} position={[24.5, 12.5, -10]} color={"yellow"} />
             </RigidBody>
 
-            <RigidBody ref={carRef1} position={[22,2,0]} type={"fixed"} colliders="cuboid">
+            <RigidBody ref={carRef1} name={"car"} position={[22,2,0]} type={"fixed"} colliders="cuboid">
                 {/* car blocks */}
-                <Block args={[7, 4, 5]} color={"black"} />
+                <Block args={[7, 4, 5]} color={"black"}/>
             </RigidBody>
 
-            <RigidBody ref={carRef2} position={[14.5,4,14.5]} rotation={[0,Math.PI/2,0]} type={"fixed"} colliders="cuboid">
-                <Block args={[12, 8, 5]} color={"black"} />
+            <RigidBody ref={carRef2} name={"car"} position={[14.5,4,14.5]} rotation={[0,Math.PI/2,0]} type={"fixed"} colliders="cuboid">
+                <Block args={[12, 8, 5]} color={"black"}/>
             </RigidBody>
         </LevelBase>
     )
