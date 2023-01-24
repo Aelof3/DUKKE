@@ -8,13 +8,8 @@ import LevelBase from "../../parts/LevelBase"
 
 export default function CityLevel4(props) {
 
-    const gearRef1 = useRef()
-
-    useFrame(() => {
-        // turn gears
-    })
-
     const wallColor = "#553300"
+
     return (
         <LevelBase 
             level={4}
