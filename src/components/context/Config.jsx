@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const ConfigContext = React.createContext(null)
 
@@ -12,6 +13,8 @@ export const ConfigProvider = ({ children }) => {
         reset: 'r',
         stuck: 'h'
     })
+
+    const navigate = useNavigate()
 
     const [isDebug, setIsDebug] = useState(false)
 
@@ -30,8 +33,14 @@ export const ConfigProvider = ({ children }) => {
 
     const cL = localStorage.getItem('currentLevel')
     const [currentLevel, setCurrentLevel] = useState(cL ? parseInt(cL) : 1)
+
+    const cZ = localStorage.getItem('currentZone')
+    const [currentZone, setCurrentZone] = useState(cZ ? cZ : 'intro')
     //const [currentLevel, setCurrentLevel] = useState(1)
     //localStorage.setItem('currentLevel', 1)
+
+    const compLevels = localStorage.getItem('completedLevels')
+    const [completedLevels, setCompletedLevels] = useState(compLevels ? JSON.parse(compLevels) : [])
 
     const [paused, setPaused] = useState(false)
 
@@ -41,9 +50,16 @@ export const ConfigProvider = ({ children }) => {
         setStartDate(new Date())
         setResets(0)
         setCurrentLevel(1)
+        setCurrentZone('intro')
+        setCompletedLevels([])
+        setUnstucks(0)
     }
 
     const handleLevelComplete = () => {
+        const completedLevel = `${currentZone}-${currentLevel}`
+        if (!completedLevels?.includes(completedLevel)) {
+            setCompletedLevels(clvls => [...clvls, completedLevel])
+        }
         setIsComplete(true)
     }
 
@@ -62,12 +78,20 @@ export const ConfigProvider = ({ children }) => {
     },[])
 
     useEffect(() => {
+        localStorage.setItem('completedLevels', JSON.stringify(completedLevels))
+    }, [completedLevels])
+
+    useEffect(() => {
         localStorage.setItem('unstucks', unstucks)
     }, [unstucks])
 
     useEffect(() => {
         localStorage.setItem('currentLevel', currentLevel)
     }, [currentLevel])
+
+    useEffect(() => {
+        localStorage.setItem('currentZone', currentZone)
+    }, [currentZone])
 
     useEffect(() => {
         localStorage.setItem('startDate', startDate)
@@ -83,7 +107,8 @@ export const ConfigProvider = ({ children }) => {
         setTimeout(() => {
             setIsComplete(false)
             
-            if (currentLevel < totalLevels) {
+            navigate('/levels')
+            /* if (currentLevel < totalLevels) {
                 setCurrentLevel(nCL => nCL + 1)
             } else {
                 
@@ -97,7 +122,7 @@ export const ConfigProvider = ({ children }) => {
                 alert(`You win! \n\n ${atob(wText.join('V'))}`)
 
                 setCurrentLevel(1)
-            }
+            } */
         }, 500)
 
         return () => {
@@ -117,6 +142,11 @@ export const ConfigProvider = ({ children }) => {
                 setPaused,
 
                 currentLevel,
+                setCurrentLevel,
+
+                currentZone,
+                setCurrentZone,
+                
                 resetProgress,
 
                 totalLevels,
@@ -124,6 +154,9 @@ export const ConfigProvider = ({ children }) => {
 
                 isComplete,
                 setIsComplete,
+
+                completedLevels,
+
                
                 resets,
                 handleResets,

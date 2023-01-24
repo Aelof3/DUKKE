@@ -7,7 +7,7 @@ export default function PauseMenu(props) {
             <img src={duckBG} alt="duck background" className="absolute inset-0 w-full h-full object-cover" />
             <ul className="z-10">
                 <li className="text-white">
-                    <Link to="/" className="p-10 bg-[#000000ee] rounded-3xl">EXIT TO MENU</Link>
+                    <Link to="/levels" className="p-10 bg-[#000000ee] rounded-3xl">EXIT TO LEVEL SELECT</Link>
                 </li>
             </ul>
         </nav>
