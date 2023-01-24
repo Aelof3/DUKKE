@@ -240,7 +240,7 @@ export default function Duck(props) {
                     if (target.rigidBodyObject.name === 'duck' && other.rigidBodyObject.name === 'end') {
                         handleLevelComplete()
                     }
-                    if (target.rigidBodyObject.name === 'duck' && other.rigidBodyObject.name === 'car') {
+                    if (target.rigidBodyObject.name === 'duck' && other.rigidBodyObject.name.includes('reset')) {
                         handleReset()
                     }
                 }

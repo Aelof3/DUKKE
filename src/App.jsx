@@ -24,6 +24,7 @@ import CityLevel1 from './components/levels/city/CityLevel1'
 import CityLevel2 from './components/levels/city/CityLevel2'
 import CityLevel3 from './components/levels/city/CityLevel3'
 import CityLevel4 from './components/levels/city/CityLevel4'
+import CityLevel5 from './components/levels/city/CityLevel5'
 
 import { ControlsProvider } from './components/context/Controls'
 import Introduction from './components/levels/zones/Introduction'
@@ -57,6 +58,7 @@ export default function App() {
                   <Route path="2" element={<CityLevel2 />} />
                   <Route path="3" element={<CityLevel3 />} />
                   <Route path="4" element={<CityLevel4 />} />
+                  <Route path="5" element={<CityLevel5 />} />
                 </Route>
               </Route>
             </Routes>

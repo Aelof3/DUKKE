@@ -1,6 +1,5 @@
-import { useFrame } from "@react-three/fiber"
 import { RigidBody } from "@react-three/rapier"
-import { useRef } from "react"
+
 import Block from "../../parts/Block"
 import Floor from "../../parts/Floor"
 import Gear from "../../parts/Gear"
