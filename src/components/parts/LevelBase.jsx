@@ -1,5 +1,6 @@
 import { useEffect, useContext } from "react"
 import { ConfigContext } from "../context/Config"
+import { ControlsContext } from "../context/Controls"
 
 import EndPoint from "./EndPoint"
 import StartPoint from "./StartPoint"
@@ -15,8 +16,11 @@ export default function LevelBase(props) {
         children
     } = props
 
+    const { setPause } = useContext(ControlsContext)
     const { setCurrentLevel } = useContext(ConfigContext)
 
+    useEffect(() => setPause(false), [])
+    
     useEffect(() => {
         setCurrentLevel(level)
     }, [level])
