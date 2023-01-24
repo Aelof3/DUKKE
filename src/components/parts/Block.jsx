@@ -1,9 +1,5 @@
 import { Box } from "@react-three/drei"
-import { useFrame } from "@react-three/fiber"
-import { RigidBody } from "@react-three/rapier"
-import { useRef, useState } from "react"
-import { Color } from "three"
-import { randomHexColor } from "../../util/helpers"
+import { useRef } from "react"
 import { useRandomColorFlash } from "../../util/hooks"
 
 export default function Block(props) {

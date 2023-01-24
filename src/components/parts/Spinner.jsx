@@ -2,10 +2,19 @@ import { useState } from "react"
 import { useFrame } from "@react-three/fiber"
 import { RigidBody } from "@react-three/rapier"
 
-export default function Spinner({ children, axes=[false,false,false], colliderType="cuboid", speed=[1,1,1], increment=[0.01,0.01,0.01], ...props }) {
-    const [rX, setRX] = useState(0)
-    const [rY, setRY] = useState(0)
-    const [rZ, setRZ] = useState(0)
+export default function Spinner({ 
+    axes=[false,false,false], 
+    colliderType="cuboid", speed=[1,1,1], 
+    increment=[0.01,0.01,0.01],
+    rotation=[0,0,0],
+    children, ...props 
+}) {
+    const pos = props?.position ?? [0,0,0]
+    const rot = rotation
+
+    const [rX, setRX] = useState(rot[0])
+    const [rY, setRY] = useState(rot[1])
+    const [rZ, setRZ] = useState(rot[2])
 
     useFrame(()=>{
         if (axes[0]) setRX(prev => prev + (increment[0] * speed[0]))
@@ -14,7 +23,7 @@ export default function Spinner({ children, axes=[false,false,false], colliderTy
     })
 
     return (
-        <RigidBody colliders={colliderType} type={"fixed"} rotation={[rX,rY,rZ]}>
+        <RigidBody colliders={colliderType} type={"fixed"} rotation={[rX,rY,rZ]} position={pos}>
             { children }
         </RigidBody>
     )
