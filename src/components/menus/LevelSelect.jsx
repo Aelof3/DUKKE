@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import duckBG from '../../assets/images/ducks1.jpg'
 
 import { ConfigContext } from '../context/Config'
+import { ControlsContext } from "../context/Controls"
 
 
 const LevelItem = ({ zone, num, bg }) => {
@@ -35,6 +36,9 @@ const ZoneItem = ({ zone, count, bg }) => {
 
 function LevelSelect(props) {
     const navigate = useNavigate()
+    const { pause, setPause } = useContext(ControlsContext)
+    
+    useEffect(() => setPause(false), [pause])
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -63,7 +67,7 @@ function LevelSelect(props) {
 
                 <div className="z-10 flex flex-col gap-4">
                     <h2 className="z-10">City</h2>
-                    <ZoneItem zone="city" count={5} bg="#480043" />
+                    <ZoneItem zone="city" count={6} bg="#480043" />
                 </div>
 
                 <Link 

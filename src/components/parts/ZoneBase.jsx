@@ -27,7 +27,7 @@ export default function Zone({ env, zone, camera, slug }) {
         const handleKeyDown = (e) => {
             // esc key
             if (e.keyCode === 27) {
-                setPause(!pause)
+                setPause(p => !p)
             }
         }
 
@@ -36,7 +36,7 @@ export default function Zone({ env, zone, camera, slug }) {
         return () => {
             window.removeEventListener("keydown", handleKeyDown)
         }
-    }, [pause])
+    }, [])
 
     return (
         <>

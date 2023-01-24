@@ -1,13 +1,18 @@
 import { Cone, Ring } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { RigidBody } from "@react-three/rapier"
-import { useRef } from "react"
+import { useRef, useContext } from "react"
 import { Vector3 } from "three"
 import Block from "../../parts/Block"
 import Floor from "../../parts/Floor"
 import LevelBase from "../../parts/LevelBase"
 
+import { ControlsContext } from "../../context/Controls"
+
 export default function CityLevel5(props) {
+
+    const { pause } = useContext(ControlsContext)
+
     const carRef1 = useRef()
     const carSpeed = 0.1
 
@@ -20,6 +25,7 @@ export default function CityLevel5(props) {
     }
 
     useFrame((state) => {
+        if (pause) return
         // do my best to move the car in an infinity symbol around the mtns
         const pt1 = { x: 14.5, y: 3.8, z: 0 }
         const pt2 = { x: 38.5, y: 3.3, z: -24.5 }

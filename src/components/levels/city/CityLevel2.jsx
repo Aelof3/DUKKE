@@ -1,11 +1,14 @@
 import { useFrame } from "@react-three/fiber"
 import { RigidBody } from "@react-three/rapier"
-import { useRef } from "react"
+import { useContext, useRef } from "react"
 import Block from "../../parts/Block"
 import Floor from "../../parts/Floor"
 import LevelBase from "../../parts/LevelBase"
+import { ControlsContext } from "../../context/Controls"
 
 export default function CityLevel2(props) {
+    
+    const { pause } = useContext(ControlsContext)
 
     const carRef0 = useRef()
     const carRef1 = useRef()
@@ -18,6 +21,7 @@ export default function CityLevel2(props) {
     const car3Speed = car2Speed
 
     useFrame(() => {
+        if (pause) return
         // car 1 move back and forth
         const car1tx = carRef1.current.translation()
         const c1X = car1tx.x > 30 ? 0 : car1tx.x + (0.1 * car1Speed)

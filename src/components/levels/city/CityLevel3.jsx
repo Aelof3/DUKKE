@@ -1,12 +1,16 @@
 import { useFrame } from "@react-three/fiber"
 import { RigidBody } from "@react-three/rapier"
-import { useRef } from "react"
+import { useRef, useContext } from "react"
 import Block from "../../parts/Block"
 import Floor from "../../parts/Floor"
 import LevelBase from "../../parts/LevelBase"
 import { getRandomColorName } from "../../../util/helpers"
 
+import { ControlsContext } from "../../context/Controls"
+
 export default function CityLevel3(props) {
+
+    const { pause } = useContext(ControlsContext)
 
     const carRef0 = useRef()
     const carRef1 = useRef()
@@ -23,7 +27,7 @@ export default function CityLevel3(props) {
 
     // generate a color for each car ref
     const carColors = Array(12).fill(0).map(() => getRandomColorName())
-    console.log(carColors)
+    
     const row1Speed = -1.5 // + 2 * Math.random()
     const row2Speed = 2.5 // + 0.5 * Math.random()
     const row3Speed = -3 // + -2 * Math.random()
@@ -38,6 +42,7 @@ export default function CityLevel3(props) {
     }
 
     useFrame(() => {
+        if (pause) return
         // car 1 move back and forth
 
         // ROW 1

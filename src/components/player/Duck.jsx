@@ -230,6 +230,7 @@ export default function Duck(props) {
         <>
         <RigidBody
             ref={rigidBodyRef}
+            ccd={true}
             name="duck"
             linearDamping={0}
             angularDamping={0}
