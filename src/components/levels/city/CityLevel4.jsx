@@ -23,6 +23,23 @@ export default function CityLevel4(props) {
                 {/* end floor */}
                 <Floor args={[5, 0.2, 5]} position={[16.9, 59.5, -7.5]} color={"#442200"} />
 
+                {/* INVISIBLE WALLS */}
+                <Block 
+                    args={[0.1, 70, 20]} 
+                    position={[9.6,35,10.1]} 
+                    rotation={[0,Math.PI/2,0]} 
+                    opacity={0.0} 
+                    color={"white"}
+                    renderOrder={100}
+                />
+                <Block 
+                    args={[0.1, 70, 20]} 
+                    position={[-0.5,35,0]} 
+                    opacity={0.0} 
+                    color={"white"} 
+                    renderOrder={100}
+                />
+
                 {/* first floor */}
                 <Floor args={[20, 0.2, 10]} position={[9.4,16,-5]} rotation={[Math.PI/-1.2,0,0]} color={"#442200"} />
                 {/* second floor */}
@@ -35,12 +52,8 @@ export default function CityLevel4(props) {
                 <Floor args={[10, 0.2, 20]} position={[5,46,0]} rotation={[0,0,Math.PI/1.2]} color={"#442200"} />
 
                 {/* walls */}
-                <Block args={[0.2, 70, 20]} position={[19.4,35,0]} color={wallColor} />
-                <Block args={[0.2, 70, 20]} position={[9.5,35,-10]} rotation={[0,Math.PI/2,0]} color={wallColor} />
-                
-                {/* DONT FORGET TO UNCOMMENT */}
-                <Block args={[0.2, 70, 20]} position={[9.6,35,10.1]} rotation={[0,Math.PI/2,0]} opacity={0.0} color={"black"}/>
-                <Block args={[0.2, 70, 20]} position={[-0.5,35,0]} opacity={0.0} color={"white"} />
+                <Block args={[0.1, 70, 20]} position={[19.4,35,0]} color={wallColor} />
+                <Block args={[0.1, 70, 20]} position={[9.5,35,-10]} rotation={[0,Math.PI/2,0]} color={wallColor} />
 
             </RigidBody>
 
