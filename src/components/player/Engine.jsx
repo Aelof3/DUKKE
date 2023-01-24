@@ -7,7 +7,7 @@ export default function Engine(props) {
     const decay = toggle ? 5 : 100
 
     return (
-        <Trail width={3} length={2} attenuation={(w) => w} decay={decay} color={color}>
+        <Trail width={3} length={2} interval={2} attenuation={(w) => w} decay={decay} color={color}>
             <Box args={[0.01, 0.01, 0.01]} {...props} />
         </Trail>
     )
