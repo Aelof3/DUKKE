@@ -20,7 +20,7 @@ export default function CityLevel5(props) {
     }
 
     useFrame((state) => {
-        // move carRef1 in figure 8 around two points
+        // do my best to move the car in an infinity symbol around the mtns
         const pt1 = { x: 14.5, y: 3.8, z: 0 }
         const pt2 = { x: 38.5, y: 3.3, z: -24.5 }
         const t = state.clock.getElapsedTime()
@@ -121,7 +121,7 @@ export default function CityLevel5(props) {
             </RigidBody>
 
             <RigidBody ref={carRef1} name={"car"} position={[50,1.5,23.5]} type={"fixed"} colliders="cuboid">
-                <Block args={[5, 1, 5]} color={'red'}/>
+                <Block args={[4, 1, 4]} color={'red'}/>
             </RigidBody>
         </LevelBase>
     )
