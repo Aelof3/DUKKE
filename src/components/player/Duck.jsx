@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, useRef, useMemo } from "react"
-import { Box, useGLTF, useFBX, useHelper } from "@react-three/drei"
+import { Box, useGLTF, useFBX, useHelper, Trail } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 
 import { ConfigContext } from "../context/Config"
@@ -7,6 +7,8 @@ import { addUrlBase } from "../../util/helpers"
 import { Quaternion, Vector3, Vector4 } from "three"
 import { CuboidCollider, RigidBody } from "@react-three/rapier"
 import { ControlsContext } from "../context/Controls"
+
+import Engine from "./Engine"
 
 const DuckModel = (props) => {
     const duckScale = 0.0017
@@ -210,16 +212,15 @@ export default function Duck(props) {
 
                 <CuboidCollider args={[0.3, 0.3, 0.25]} position={[0, -0.1, 0]} name="duck_collider" />
 
-                {/*
                 
-                TODO: replace these with engine fire or smoke plumes
+                
 
-                <Engine position={[0.25, -0.3, -0.15]} toggle={keyFrontLeft || keyThrottle} name="engine_front_left" />
-                <Engine position={[0.25, -0.3, 0.15]} toggle={keyFrontRight || keyThrottle} name="engine_front_right" />
-                <Engine position={[-0.25, -0.3, -0.15]} toggle={keyBackLeft || keyThrottle} name="engine_back_left" />
-                <Engine position={[-0.25, -0.3, 0.15]} toggle={keyBackRight || keyThrottle} name="engine_back_right" /> 
+                <Engine position={[0.2, -0.3, -0.21]} toggle={keyFrontLeft || keyThrottle} name="engine_front_left" />
+                <Engine position={[0.2, -0.3, 0.21]} toggle={keyFrontRight || keyThrottle} name="engine_front_right" />
+                <Engine position={[-0.25, -0.3, -0.21]} toggle={keyBackLeft || keyThrottle} name="engine_back_left" />
+                <Engine position={[-0.25, -0.3, 0.21]} toggle={keyBackRight || keyThrottle} name="engine_back_right" /> 
                 
-                */}
+               
 
 
                 <DuckModel position={[0.02, -0.4, 0]} name="duck_model" />
