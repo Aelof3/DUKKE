@@ -236,6 +236,7 @@ export default function Duck(props) {
             angularDamping={0}
             mass={1}
             rotation={[0, 0, 0]}
+            colliders={false}
             onCollisionEnter={({ manifold, target, other }) => {
                 if (other.rigidBodyObject) {
                     if (target.rigidBodyObject.name === 'duck' && other.rigidBodyObject.name === 'end') {
@@ -248,7 +249,7 @@ export default function Duck(props) {
             }}
         >
             <group ref={ref} position={startPos}>
-                <CuboidCollider args={[0.3, 0.3, 0.25]} position={[0,-0.1,0]} name="duck_collider" />
+                <CuboidCollider args={[0.3, 0.3, 0.25]} position={[0,-0.1,0]} />
 
                 {/* <Engines /> */}
 

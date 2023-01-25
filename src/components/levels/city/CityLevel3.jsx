@@ -74,7 +74,7 @@ export default function CityLevel3(props) {
             end_pos={[59, 0.5, 0]}
         >
             <RigidBody type={"fixed"} colliders="cuboid">
-                <Floor args={[60, 0.2, 60]} position={[29.5,-0.1,0]} />
+                <Floor args={[60, 0.2, 60]} position={[29.5,-0.1,0]} color={"darkgreen"} />
             </RigidBody>
 
             {/* cars */}

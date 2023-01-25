@@ -14,7 +14,10 @@ export default function CityLevel5(props) {
     const { pause } = useContext(ControlsContext)
 
     const carRef1 = useRef()
-    const carSpeed = 0.1
+    const carRef2 = useRef()
+
+    const carSpeed1 = 0.1 * Math.random() + 0.1
+    const carSpeed2 = 0.1 * Math.random() + 0.1
 
     const rVec = new Vector3()
 
@@ -36,16 +39,28 @@ export default function CityLevel5(props) {
 
         const a = newX
 
-        const tS = (t * carSpeed)
-
-        const tx = {
-            x: a * Math.cos(tS) + 23.5,
+        const tS1 = (t * carSpeed1)
+        
+        const tx1 = {
+            x: a * Math.cos(tS1) + 23.5,
             y: pt2.y,
-            z: a * Math.sin(tS) * Math.cos(tS) - newZ
+            z: a * Math.sin(tS1) * Math.cos(tS1) - newZ
         }
         
-        const newPos = getLocalForce(tx.x, tx.y, tx.z)
-        carRef1.current.setTranslation(newPos)
+        const newPos1 = getLocalForce(tx1.x, tx1.y, tx1.z)
+        carRef1.current.setTranslation(newPos1)
+        
+        const tS2 = (t * carSpeed2)
+        
+        const tx2 = {
+            x: a * Math.sin(tS2) + 23.5,
+            y: pt2.y,
+            z: a * Math.sin(tS2) * Math.cos(tS2) - newZ
+        }
+        
+        const newPos2 = getLocalForce(tx2.x, tx2.y, tx2.z)
+
+        carRef2.current.setTranslation(newPos2)
     })
 
     return (
@@ -60,11 +75,13 @@ export default function CityLevel5(props) {
                     name="floor_reset"
                     args={[30, 0.2, 30]} 
                     position={[14.5,-0.1,0]} 
+                    color={'snow'}
                 />
                 <Floor
                     name="floor_reset" 
                     args={[30, 0.2, 30]} 
                     position={[38.5,0.1,-24.5]} 
+                    color={'snow'}
                 />
             </RigidBody>
 
@@ -74,12 +91,14 @@ export default function CityLevel5(props) {
                     args={[8.8, 0.2, 8.8]} 
                     position={[0, 3.4, 18.5]} 
                     rotation={[0,Math.PI/3.32,0]} 
+                    color={'#480043'}
                 />
                 <Floor 
                     name="floor"
                     args={[8.5, 0.2, 8.5]} 
                     position={[52.5, 3.4, -43]} 
                     rotation={[0,Math.PI/3.35,0]} 
+                    color={'#480043'}
                 />
 
             </RigidBody>
@@ -126,8 +145,11 @@ export default function CityLevel5(props) {
                 </Cone>
             </RigidBody>
 
-            <RigidBody ref={carRef1} name={"car"} position={[50,1.5,23.5]} type={"fixed"} colliders="cuboid">
-                <Block args={[4, 1, 4]} color={'red'}/>
+            <RigidBody ref={carRef1} name={"sled"} position={[50,1.25,23.5]} type={"fixed"} colliders="cuboid">
+                <Block args={[4, 0.5, 4]} color={'red'}/>
+            </RigidBody>
+            <RigidBody ref={carRef2} name={"sled"} position={[50,1.25,23.5]} type={"fixed"} colliders="cuboid">
+                <Block args={[4, 0.5, 4]} color={'royalblue'}/>
             </RigidBody>
         </LevelBase>
     )
