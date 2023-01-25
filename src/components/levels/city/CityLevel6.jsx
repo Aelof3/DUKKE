@@ -27,14 +27,14 @@ export default function CityLevel6(props) {
 
     const wheelPaddleProps = {
         name:"wheel_paddle",
-        args:[39.5, 5, 0.4],
-        position:[0, 2, 0],
-        color: 'brown',
+        args:[39.5, 5, 5],
+        position:[0, 1, 0],
+        color: 'black',
         friction: 0
     }
     const wheelPaddleColliderProps = {
-        args:[19.5,2.5,0.2],
-        position:[0, 2, 0]
+        args:[19.5,2.5,2.5],
+        position:[0, 1, 0]
     }
         
 
